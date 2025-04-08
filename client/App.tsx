@@ -1,25 +1,20 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import AuthStackNavigator from './src/navigation/AuthStackNavigator';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
   // const isDarkMode = useColorScheme() === 'dark';
-  const [name, setName] = useState('');
-  const handleChangeInput = (text: string) => {
-    console.log(text);
-    setName(text);
-  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text>이름</Text>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={handleChangeInput}
-        />
-      </View>
-    </SafeAreaView>
+    <GestureHandlerRootView>
+      <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+          <AuthStackNavigator />
+        </SafeAreaView>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
