@@ -2,14 +2,16 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
-import useForm from '../../hooks/useForm';
+import {useForm} from '../../hooks';
+import {LoginInformation, validateLogin} from '../../utils';
 
 function LoginScreen() {
-  const {form, touched, getTextInputProps} = useForm({
+  const {form, errors, touched, getTextInputProps} = useForm<LoginInformation>({
     initialValue: {
       email: '',
       password: '',
     },
+    validate: validateLogin,
   });
 
   const handleSubmit = () => {
@@ -21,14 +23,14 @@ function LoginScreen() {
       <View style={styles.inputContainer}>
         <InputField
           placeholder="이메일"
-          error={'이메일을 입력하세요'}
+          error={errors.email}
           touched={touched.email}
           inputMode="email"
           {...getTextInputProps('email')}
         />
         <InputField
           placeholder="비밀번호"
-          error={'비밀번호를 입력하세요'}
+          error={errors.password}
           secureTextEntry
           touched={touched.password}
           {...getTextInputProps('password')}
