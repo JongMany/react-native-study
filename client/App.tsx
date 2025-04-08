@@ -1,8 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import AuthStackNavigator from './src/navigation/AuthStackNavigator';
+// import AuthStackNavigator from './src/navigations/AuthStackNavigator';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import RootNavigator from './src/navigations/root/RootNavigator';
 
 function App(): React.JSX.Element {
   // const isDarkMode = useColorScheme() === 'dark';
@@ -11,7 +12,7 @@ function App(): React.JSX.Element {
     <GestureHandlerRootView>
       <NavigationContainer>
         <SafeAreaView style={styles.container}>
-          <AuthStackNavigator />
+          <RootNavigator />
         </SafeAreaView>
       </NavigationContainer>
     </GestureHandlerRootView>
@@ -21,18 +22,6 @@ function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: 'black',
-    height: 50,
-    width: 100,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 
