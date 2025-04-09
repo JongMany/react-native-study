@@ -1,13 +1,15 @@
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
 import React, {useRef} from 'react';
 import InputField from '../../components/InputField';
 import {useForm} from '../../hooks';
 import {SignupInformation, validateSignUp} from '../../utils';
 import CustomButton from '../../components/CustomButton';
+import useAuth from '../../hooks/queries/useAuth';
 
 export default function SignupScreen() {
   const passwordRef = useRef<TextInput | null>(null);
   const passwordConfirmRef = useRef<TextInput | null>(null);
+  const {signupMutation, loginMutation} = useAuth();
 
   const {errors, form, getTextInputProps, touched} = useForm<SignupInformation>(
     {
@@ -20,7 +22,25 @@ export default function SignupScreen() {
     },
   );
   const handleSubmit = () => {
-    console.log(form);
+    const requestDto = {
+      email: form.email,
+      password: form.password,
+    };
+    console.log(requestDto);
+    signupMutation.mutate(requestDto, {
+      onSuccess: () => {
+        loginMutation.mutate(requestDto, {
+          onError: error => {
+            // TO-DO) Error 처리
+            console.log(error.response?.data);
+          },
+        });
+      },
+      onError: error => {
+        // TO-DO) Error 처리
+        console.log(error.response?.data);
+      },
+    });
   };
   return (
     <SafeAreaView style={styles.container}>

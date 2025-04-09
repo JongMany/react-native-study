@@ -32,7 +32,7 @@ export const postLogin = async ({
   email,
   password,
 }: LoginRequestDto): Promise<LoginResponseDto> => {
-  const {data} = await axiosInstance.post('/auth/login', {
+  const {data} = await axiosInstance.post('/auth/signin', {
     email,
     password,
   });
