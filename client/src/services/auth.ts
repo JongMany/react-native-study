@@ -1,3 +1,4 @@
+import { storageKey } from '../constants';
 import {Category, Profile} from '../models';
 import {getEncryptStorage} from '../utils';
 import {axiosInstance} from './axios-instance';
@@ -52,7 +53,7 @@ export type RefreshTokenResponseDto = {
 };
 
 export const getAccesssToken = async (): Promise<RefreshTokenResponseDto> => {
-  const refreshToken = await getEncryptStorage('refreshToken');
+  const refreshToken = await getEncryptStorage(storageKey.AUTH.REFRESH_TOKEN);
   const {data} = await axiosInstance.get('/auth/refresh', {
     headers: {
       Authorization: `Bearer ${refreshToken}`,

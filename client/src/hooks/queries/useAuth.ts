@@ -19,6 +19,13 @@ import {
   setEncryptStorage,
 } from '../../utils';
 import {useEffect} from 'react';
+import {numbers, storageKey} from '../../constants';
+
+export const authQueryKey = {
+  all: ['auth'] as const,
+  getAccessToken: () => [...authQueryKey.all, 'getAccessToken'] as const,
+  getProfile: () => [...authQueryKey.all, 'getProfile'] as const,
+} as const;
 
 export const useSignup = (
   mutationOptions?: UseMutationCustomOptions<void, SignupRequestDto>,
@@ -37,15 +44,15 @@ export const useLogin = (
     ...mutationOptions,
     onSuccess(data) {
       const {accessToken, refreshToken} = data;
-      setEncryptStorage('refreshToken', refreshToken);
+      setEncryptStorage(storageKey.AUTH.REFRESH_TOKEN, refreshToken);
       setAxiosHeader('Authorization', `Bearer ${accessToken}`);
     },
     onSettled() {
       queryClient.refetchQueries({
-        queryKey: ['auth', 'getAccessToken'],
+        queryKey: authQueryKey.getAccessToken(),
       });
       queryClient.invalidateQueries({
-        queryKey: ['auth', 'getProfile'],
+        queryKey: authQueryKey.getProfile(),
       });
     },
   });
@@ -53,10 +60,10 @@ export const useLogin = (
 
 export const useRefreshAccessToken = () => {
   const {isSuccess, isError, data} = useQuery({
-    queryKey: ['auth', 'getAccessToken'],
+    queryKey: authQueryKey.getAccessToken(),
     queryFn: getAccesssToken,
-    staleTime: 1000 * 60 * 30 - 1000 * 60 * 3, // 27분 (accessToken은 30분)
-    refetchInterval: 1000 * 60 * 30 - 1000 * 60 * 3,
+    staleTime: numbers.ACCESS_TOKEN_REFRESH_TIME, // 27분 (accessToken은 30분)
+    refetchInterval: numbers.ACCESS_TOKEN_REFRESH_TIME,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
     refetchIntervalInBackground: true,
@@ -65,14 +72,14 @@ export const useRefreshAccessToken = () => {
   useEffect(() => {
     if (isSuccess) {
       setAxiosHeader('Authorization', `Bearer ${data.accessToken}`);
-      setEncryptStorage('refreshToken', data.refreshToken);
+      setEncryptStorage(storageKey.AUTH.REFRESH_TOKEN, data.refreshToken);
     }
   }, [isSuccess, data]);
 
   useEffect(() => {
     if (isError) {
       removeAxiosHeader('Authorization');
-      removeEncryptStorage('refreshToken');
+      removeEncryptStorage(storageKey.AUTH.REFRESH_TOKEN);
     }
   }, [isError]);
 
@@ -86,7 +93,7 @@ export const useGetProfile = (
   queryOptions?: UseQueryCustomOptions<ProfileResponseDto, unknown>,
 ) => {
   return useQuery({
-    queryKey: ['auth', 'getProfile'],
+    queryKey: authQueryKey.getProfile(),
     queryFn: getProfile,
     ...queryOptions,
   });
@@ -97,11 +104,11 @@ export const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
     mutationFn: logout,
     onSuccess: () => {
       removeAxiosHeader('Authorization');
-      removeEncryptStorage('refreshToken');
+      removeEncryptStorage(storageKey.AUTH.REFRESH_TOKEN);
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ['auth'],
+        queryKey: authQueryKey.all,
       });
     },
     ...mutationOptions,
