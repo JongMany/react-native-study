@@ -1,5 +1,5 @@
 import {AxiosHeaderValue} from 'axios';
-import {axiosInstance} from '../services/axios-instance';
+import {axiosInstance} from '@/services/axios-instance';
 
 type ContentType =
   | AxiosHeaderValue
@@ -19,7 +19,10 @@ type RawAxiosRequestHeaders = {
   Authorization?: AxiosHeaderValue | undefined;
   'Content-Type'?: ContentType | undefined;
 };
-export const setAxiosHeader = (key: keyof RawAxiosRequestHeaders, value: string) => {
+export const setAxiosHeader = (
+  key: keyof RawAxiosRequestHeaders,
+  value: string,
+) => {
   axiosInstance.defaults.headers.common[key] = value;
 };
 

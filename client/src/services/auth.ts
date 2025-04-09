@@ -1,6 +1,6 @@
-import { storageKey } from '../constants';
-import {Category, Profile} from '../models';
-import {getEncryptStorage} from '../utils';
+import {storageKey} from '@/constants';
+import {Category, Profile} from '@/models';
+import {getEncryptStorage} from '@/utils';
 import {axiosInstance} from './axios-instance';
 
 export type SignupRequestDto = {

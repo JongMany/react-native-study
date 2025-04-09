@@ -10,16 +10,16 @@ import {
   ProfileResponseDto,
   queryClient,
   SignupRequestDto,
-} from '../../services';
-import {UseMutationCustomOptions, UseQueryCustomOptions} from '../../models';
+} from '@/services';
+import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/models';
 import {
   removeAxiosHeader,
   removeEncryptStorage,
   setAxiosHeader,
   setEncryptStorage,
-} from '../../utils';
+} from '@/utils';
 import {useEffect} from 'react';
-import {numbers, storageKey} from '../../constants';
+import {numbers, storageKey} from '@/constants';
 
 export const authQueryKey = {
   all: ['auth'] as const,
