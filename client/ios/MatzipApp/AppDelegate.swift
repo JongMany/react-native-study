@@ -2,10 +2,12 @@ import UIKit
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
+import GoogleMaps
 
 @main
 class AppDelegate: RCTAppDelegate {
   override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    GMSServices.provideAPIKey("AIzaSyCZ5tdRSJdeQSaadna0xe00DVHEejclj24")
     self.moduleName = "MatzipApp"
     self.dependencyProvider = RCTAppDependencyProvider()
 

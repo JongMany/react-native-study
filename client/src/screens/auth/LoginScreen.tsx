@@ -18,7 +18,12 @@ function LoginScreen() {
   });
 
   const handleSubmit = () => {
-    loginMutation.mutate(form);
+    loginMutation.mutate(form, {
+      // TO-DO) Login
+      onError: error => {
+        console.dir(error);
+      },
+    });
   };
 
   return (
