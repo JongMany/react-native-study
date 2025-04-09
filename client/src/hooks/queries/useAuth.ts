@@ -4,6 +4,7 @@ import {
   getProfile,
   LoginRequestDto,
   LoginResponseDto,
+  logout,
   postLogin,
   postSignup,
   ProfileResponseDto,
@@ -91,9 +92,26 @@ export const useGetProfile = (
   });
 };
 
+export const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      removeAxiosHeader('Authorization');
+      removeEncryptStorage('refreshToken');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['auth'],
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
 const useAuth = () => {
   const signupMutation = useSignup();
   const loginMutation = useLogin();
+  const logoutMutation = useLogout();
   const refreshAccessToken = useRefreshAccessToken();
   const getProfileQuery = useGetProfile({
     enabled: refreshAccessToken.isSuccess,
@@ -105,6 +123,7 @@ const useAuth = () => {
     signupMutation,
     loginMutation,
     getProfileQuery,
+    logoutMutation,
   };
 };
 
