@@ -1,4 +1,4 @@
-import { alerts } from '@/constants';
+import {alerts} from '@/constants';
 import {useEffect} from 'react';
 import {Alert, Linking, Platform} from 'react-native';
 import {
@@ -54,6 +54,7 @@ export function usePermission(type: PermissionType) {
             showPermissionAlert();
             return;
           }
+          console.log(checked, isAndroid);
           await request(permissionOS[type]);
           break;
         case RESULTS.BLOCKED:
@@ -64,5 +65,5 @@ export function usePermission(type: PermissionType) {
           break;
       }
     })();
-  });
+  }, [type]);
 }
