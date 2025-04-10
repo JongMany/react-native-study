@@ -9,6 +9,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import GeoLocation from '@react-native-community/geolocation';
+import {useUserLocation} from '@/hooks';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
@@ -21,31 +22,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   const inset = useSafeAreaInsets();
   const navigation = useNavigation<Navigation>();
   const mapRef = useRef<MapView | null>(null);
-  const [userLocation, setUserLocation] = useState<LatLng>({
-    latitude: 37.5516032365118,
-    longitude: 126.98989626929192,
-  });
-  const [isUserLocationError, setIsUserLocationError] = useState(false);
-
-  useEffect(() => {
-    GeoLocation.getCurrentPosition(
-      info => {
-        const {latitude, longitude} = info.coords;
-        setUserLocation({
-          latitude,
-          longitude,
-        });
-        setIsUserLocationError(false);
-      },
-      () => {
-        // Error
-        setIsUserLocationError(true);
-      },
-      {
-        enableHighAccuracy: true,
-      },
-    );
-  }, []);
+  const {userLocation, isUserLocationError} = useUserLocation();
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
