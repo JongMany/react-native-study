@@ -22,7 +22,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   const navigation = useNavigation<Navigation>();
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
-  usePermission();
+  usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
