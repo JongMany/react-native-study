@@ -90,7 +90,7 @@ export const useRefreshAccessToken = () => {
 };
 
 export const useGetProfile = (
-  queryOptions?: UseQueryCustomOptions<ProfileResponseDto, unknown>,
+  queryOptions?: UseQueryCustomOptions<ProfileResponseDto, ProfileResponseDto>,
 ) => {
   return useQuery({
     queryKey: authQueryKey.getProfile(),

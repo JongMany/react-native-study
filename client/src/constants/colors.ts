@@ -1,4 +1,5 @@
 export const colors = {
+  PINK_200: '#FAE2E9',
   PINK_500: '#BF5C79',
   PINK_700: '#C63B64',
   GRAY_100: '#F8F8F8',
