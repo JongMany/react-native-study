@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {colors, mapNavigations} from '@/constants';
@@ -10,11 +10,12 @@ import CustomButton from '@/components/CustomButton';
 import {useForm} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
 import {validateAddPost} from '@/utils';
+import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
 
-const AddPostScreen = ({route}: AddPostScreenProps) => {
+const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const location = route.params.location;
   const descriptionRef = useRef<TextInput | null>(null);
 
@@ -25,6 +26,15 @@ const AddPostScreen = ({route}: AddPostScreenProps) => {
     },
     validate: validateAddPost,
   });
+
+  const handleSubmit = useCallback(() => {}, []);
+
+  useEffect(() => {
+    // Header에 추가
+    navigation.setOptions({
+      headerRight: () => AddPostHeaderRight(handleSubmit),
+    });
+  }, [handleSubmit, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
