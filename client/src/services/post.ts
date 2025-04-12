@@ -2,7 +2,7 @@ import {ImageUri, Post} from '@/models';
 import {axiosInstance} from './axios-instance';
 
 export type CreatePostRequestDto = Omit<Post, 'id'> & {
-  imageUri: ImageUri[];
+  imageUris: ImageUri[];
 };
 export type CreatePostResponseDto = Post & {imageUri: ImageUri[]};
 
