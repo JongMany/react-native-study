@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1A8467EB2DA8874800FDD933 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A8467EA2DA8874800FDD933 /* Ionicons.ttf */; };
+		1A8467ED2DA8875100FDD933 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A8467EC2DA8875100FDD933 /* MaterialIcons.ttf */; };
+		1A8467EF2DA8876400FDD933 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A8467EE2DA8876400FDD933 /* Octicons.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		83DDFEECC3EA43DAA5C9DA55 /* libPods-MatzipApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */; };
@@ -19,6 +22,9 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MatzipApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MatzipApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = MatzipApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		1A8467EA2DA8874800FDD933 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		1A8467EC2DA8875100FDD933 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		1A8467EE2DA8876400FDD933 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		1FAE2214CE550DAFD912B2AD /* Pods-MatzipApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatzipApp.release.xcconfig"; path = "Target Support Files/Pods-MatzipApp/Pods-MatzipApp.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MatzipApp/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MatzipApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,6 +48,7 @@
 		13B07FAE1A68108700A75B9A /* MatzipApp */ = {
 			isa = PBXGroup;
 			children = (
+				1A8467E92DA886F200FDD933 /* Fonts */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -49,6 +56,16 @@
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
 			name = MatzipApp;
+			sourceTree = "<group>";
+		};
+		1A8467E92DA886F200FDD933 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1A8467EA2DA8874800FDD933 /* Ionicons.ttf */,
+				1A8467EC2DA8875100FDD933 /* MaterialIcons.ttf */,
+				1A8467EE2DA8876400FDD933 /* Octicons.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -160,6 +177,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				1A8467ED2DA8875100FDD933 /* MaterialIcons.ttf in Resources */,
+				1A8467EB2DA8874800FDD933 /* Ionicons.ttf in Resources */,
+				1A8467EF2DA8876400FDD933 /* Octicons.ttf in Resources */,
 				DFAD9B3F0C9C5AE149D07092 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,10 +396,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -448,10 +465,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
