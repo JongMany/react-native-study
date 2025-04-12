@@ -1,13 +1,16 @@
+import React, {useRef} from 'react';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import {colors} from '@/constants';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useRef} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {usePermission, useUserLocation} from '@/hooks';
 
 type Navigation = CompositeNavigationProp<
@@ -25,6 +28,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
+    console.log(userLocation, mapRef);
     if (isUserLocationError) {
       return;
     }
@@ -49,11 +53,11 @@ function MapHomeScreen({}: MapHomeScreenProps) {
       <Pressable
         style={[styles.drawerButton, {top: inset.top || 20}]}
         onPress={() => navigation.openDrawer()}>
-        <Text>서랍</Text>
+        <Ionicons name="menu" color={colors.WHITE} size={25} />
       </Pressable>
       <View style={styles.buttonList}>
         <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
-          <Text>내 위치</Text>
+          <MaterialIcons name="my-location" color={colors.WHITE} size={25} />
         </Pressable>
       </View>
     </>
