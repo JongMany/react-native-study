@@ -1,4 +1,11 @@
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React from 'react';
 import {
   DrawerContentComponentProps,
@@ -13,6 +20,7 @@ export default function CustomDrawerContent(
 ) {
   const {getProfileQuery} = useAuth();
   const {email, nickname, imageUri, kakaoImageUri} = getProfileQuery.data || {};
+  const {logoutMutation} = useAuth();
 
   let imageSrc = require('@/assets/user-default.png');
   if (imageUri !== null) {
@@ -20,6 +28,9 @@ export default function CustomDrawerContent(
   } else if (kakaoImageUri !== null) {
     imageSrc = {uri: kakaoImageUri};
   }
+  const handleLogout = () => {
+    logoutMutation.mutate(null);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,6 +49,10 @@ export default function CustomDrawerContent(
         {/* Navigator 자식요소 */}
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
+      {/* LogoutButton */}
+      <Pressable style={styles.logoutButton} onPress={handleLogout}>
+        <Text>로그아웃</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -68,5 +83,9 @@ const styles = StyleSheet.create({
   },
   nameText: {
     color: colors.BLACK,
+  },
+  logoutButton: {
+    alignItems: 'flex-end',
+    padding: 10,
   },
 });
