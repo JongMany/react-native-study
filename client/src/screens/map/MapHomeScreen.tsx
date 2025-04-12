@@ -28,7 +28,6 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
-    console.log(userLocation, mapRef);
     if (isUserLocationError) {
       return;
     }
