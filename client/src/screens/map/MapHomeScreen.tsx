@@ -7,7 +7,7 @@ import MapView, {
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Alert, Pressable, StyleSheet, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -16,8 +16,12 @@ import {alerts, colors, mapNavigations} from '@/constants';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
-import {usePermission, useUserLocation} from '@/hooks';
+import {
+  CompositeNavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
+import {useGetMarkers, usePermission, useUserLocation} from '@/hooks';
 import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
 
@@ -25,7 +29,20 @@ type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
   DrawerNavigationProp<MainDrawerParamList>
 >;
+export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
+  const firstTimeRef = React.useRef(true);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (firstTimeRef.current) {
+        firstTimeRef.current = false;
+        return;
+      }
+
+      refetch();
+    }, [refetch]),
+  );
+}
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -33,6 +50,8 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   const navigation = useNavigation<Navigation>();
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
+  const {data: markers = []} = useGetMarkers();
+
   usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
@@ -65,6 +84,8 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     setSelectLocation(null);
   };
 
+  console.log(markers, selectLocation);
+
   return (
     <>
       <MapView
@@ -76,24 +97,22 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         showsMyLocationButton={false}
         customMapStyle={mapStyle}
         onLongPress={handleLongPressMapView}>
-        <CustomMarker
-          coordinate={{
-            latitude: 37.5516032365118,
-            longitude: 126.98989626929192,
-          }}
-          color="RED"
-        />
-        <CustomMarker
-          coordinate={{
-            latitude: 37.5216032365118,
-            longitude: 126.98989626929192,
-          }}
-          color="BLUE"
-        />
+        {markers?.map(({id, color, latitude, longitude}) => {
+          return (
+            <CustomMarker
+              key={id}
+              color={color}
+              coordinate={{
+                latitude,
+                longitude,
+              }}
+            />
+          );
+        })}
+
         {selectLocation && (
-          <Callout>
-            <Marker coordinate={selectLocation} />
-          </Callout>
+          // <Callout> </Callout>
+          <Marker coordinate={selectLocation} />
         )}
       </MapView>
       <Pressable

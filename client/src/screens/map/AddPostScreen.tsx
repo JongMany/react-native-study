@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {colors, mapNavigations} from '@/constants';
@@ -7,10 +7,11 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputField from '@/components/InputField';
 import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton';
-import {useForm} from '@/hooks';
+import {useCreatePost, useForm} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
 import {validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
+import {MarkerColor} from '@/models';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
@@ -18,6 +19,10 @@ interface AddPostScreenProps
 const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const location = route.params.location;
   const descriptionRef = useRef<TextInput | null>(null);
+  const createPost = useCreatePost();
+  const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
+  const [score, setScore] = useState(5);
+  const [address, setAddress] = useState('');
 
   const addPost = useForm({
     initialValue: {
@@ -27,7 +32,27 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
     validate: validateAddPost,
   });
 
-  const handleSubmit = useCallback(() => {}, []);
+  const handleSubmit = useCallback(() => {
+    const createPostRequestDto = {
+      date: new Date(),
+      title: addPost.form.title,
+      description: addPost.form.description,
+      color: markerColor,
+      score: score,
+      address,
+      imageUris: [],
+      ...location,
+    };
+    createPost.mutate(createPostRequestDto, {
+      onSuccess: () => {
+        navigation.goBack();
+      },
+      onError: error => {
+        // Error 처리
+        console.log(error.response);
+      },
+    });
+  }, [addPost, address, location, score, markerColor, createPost, navigation]);
 
   useEffect(() => {
     // Header에 추가

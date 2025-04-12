@@ -24,7 +24,6 @@ export default function CustomMarker({
   score = 5,
   ...markerDefaultProps
 }: CustomMarkerProps) {
-  console.log(score);
   return (
     <Marker coordinate={coordinate} {...markerDefaultProps}>
       <View style={styles.container}>
