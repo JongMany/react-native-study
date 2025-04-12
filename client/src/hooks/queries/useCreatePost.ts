@@ -3,8 +3,11 @@ import {
   createPost,
   CreatePostRequestDto,
   CreatePostResponseDto,
+  GetMarkersResponseDto,
+  queryClient,
 } from '@/services';
 import {useMutation} from '@tanstack/react-query';
+import {markerQueryKey} from './useGetMarkers';
 
 export const useCreatePost = (
   mutationOptions?: UseMutationCustomOptions<
@@ -14,6 +17,25 @@ export const useCreatePost = (
 ) => {
   return useMutation({
     mutationFn: createPost,
+    onSuccess: response => {
+      // queryClient.invalidateQueries({queryKey: markerQueryKey.getMarkers()});
+
+      // setQueryData
+      queryClient.setQueryData<GetMarkersResponseDto>(
+        markerQueryKey.getMarkers(),
+        prevMarkers => {
+          const newMarker = {
+            id: response.id,
+            color: response.color,
+            score: response.score,
+            latitude: response.latitude,
+            longitude: response.longitude,
+          };
+
+          return prevMarkers ? [...prevMarkers, newMarker] : [newMarker];
+        },
+      );
+    },
     ...mutationOptions,
   });
 };
