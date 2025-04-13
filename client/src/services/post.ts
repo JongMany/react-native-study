@@ -12,3 +12,16 @@ export const createPost = async (
   const {data} = await axiosInstance.post('/posts', body);
   return data;
 };
+
+export type GetPostRequestDto = number; // Post Id
+
+export type GetPostResponseDto = CreatePostResponseDto & {
+  isFavorite: boolean;
+};
+
+export const getPost = async (
+  id: GetPostRequestDto,
+): Promise<GetPostResponseDto> => {
+  const {data} = await axiosInstance.get(`/posts/${id}`);
+  return data;
+};
