@@ -4,7 +4,19 @@ import {useGetInfinitePosts} from '@/hooks';
 import FeedItem from './FeedItem';
 
 export default function FeedList() {
-  const {data: posts} = useGetInfinitePosts();
+  const {
+    data: posts,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetInfinitePosts();
+
+  const handleEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
   return (
     <View>
       <FlatList
@@ -13,6 +25,8 @@ export default function FeedList() {
         keyExtractor={item => String(item.id)}
         numColumns={2}
         contentContainerStyle={styles.contentContainer}
+        onEndReached={handleEndReached}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
