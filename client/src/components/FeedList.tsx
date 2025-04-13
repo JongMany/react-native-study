@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useGetInfinitePosts} from '@/hooks';
 import FeedItem from './FeedItem';
 
@@ -9,12 +9,20 @@ export default function FeedList() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    refetch,
   } = useGetInfinitePosts();
 
   const handleEndReached = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
+  };
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await refetch();
+    setIsRefreshing(false);
   };
 
   return (
@@ -27,6 +35,10 @@ export default function FeedList() {
         contentContainerStyle={styles.contentContainer}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
+        refreshing={isRefreshing}
+        onRefresh={handleRefresh}
+        scrollIndicatorInsets={{right: 1}}
+        indicatorStyle="black"
       />
     </View>
   );

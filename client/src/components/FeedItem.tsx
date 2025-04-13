@@ -44,7 +44,9 @@ export default function FeedItem({post}: FeedItemProps) {
           {getDateWithSeparator(post.date, '/')}
         </Text>
         <Text style={styles.titleText}>{post.title}</Text>
-        <Text style={styles.descriptionText}>{post.description}</Text>
+        <Text style={styles.descriptionText} numberOfLines={1}>
+          {post.description}
+        </Text>
       </View>
     </View>
   );
