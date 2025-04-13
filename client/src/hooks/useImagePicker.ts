@@ -24,6 +24,11 @@ export function useImagePicker({initialImages = []}: UseImagePickerProps) {
     setImageUris(prev => [...prev, ...uris.map(uri => ({uri}))]);
   };
 
+  const deleteImageUri = (uri: string) => {
+    const newImageUris = imageUris.filter(imageUri => imageUri.uri !== uri);
+    setImageUris(newImageUris);
+  };
+
   const handleChange = () => {
     ImageCropPicker.openPicker({
       mediaType: 'photo',
@@ -50,5 +55,6 @@ export function useImagePicker({initialImages = []}: UseImagePickerProps) {
   return {
     imageUris,
     handleChange,
+    delete: deleteImageUri,
   };
 }

@@ -2,12 +2,18 @@ import {Image, Platform, Pressable, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ImageUri} from '@/models';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {colors} from '@/constants';
 
 interface PreviewImageListProps {
   imageUris: ImageUri[];
+  onDelete?: (imageUri: string) => void;
 }
 
-export default function PreviewImageList({imageUris}: PreviewImageListProps) {
+export default function PreviewImageList({
+  imageUris,
+  onDelete,
+}: PreviewImageListProps) {
   const baseUri =
     Platform.OS === 'android'
       ? 'http://10.0.2.2:3030'
@@ -24,6 +30,14 @@ export default function PreviewImageList({imageUris}: PreviewImageListProps) {
               }}
               style={styles.image}
             />
+            {/* Delete Button */}
+            <Pressable
+              style={[styles.imageButton, styles.deleteButton]}
+              onPress={() => {
+                onDelete && onDelete(uri);
+              }}>
+              <Ionicons name="close" size={16} color={colors.WHITE} />
+            </Pressable>
           </Pressable>
         ))}
       </View>
@@ -34,7 +48,6 @@ export default function PreviewImageList({imageUris}: PreviewImageListProps) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-
     paddingHorizontal: 15,
     gap: 15,
   },
@@ -45,5 +58,14 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+  },
+  imageButton: {
+    position: 'absolute',
+    backgroundColor: colors.BLACK,
+    zIndex: 1,
+  },
+  deleteButton: {
+    top: 0,
+    right: 0,
   },
 });
