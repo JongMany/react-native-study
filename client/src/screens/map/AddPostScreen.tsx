@@ -13,6 +13,7 @@ import {validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import {MarkerColor} from '@/models';
 import MarkerSelector from '@/components/MarkerSelector';
+import ScoreInput from '@/components/ScoreInput';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
@@ -27,6 +28,9 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   };
 
   const [score, setScore] = useState(5);
+  const handleChangeScore = (newScore: number) => {
+    setScore(newScore);
+  };
 
   const address = useGetAddress(location);
 
@@ -102,6 +106,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
             markerColor={markerColor}
             onPressMarker={handleSelectMarker}
           />
+          <ScoreInput score={score} onChangeScore={handleChangeScore} />
         </View>
       </ScrollView>
     </SafeAreaView>
