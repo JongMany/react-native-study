@@ -3,6 +3,8 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import {useUploadImages} from './queries';
 import {useState} from 'react';
 import {ImageUri} from '@/models';
+import {Alert} from 'react-native';
+import {alerts} from '@/constants';
 
 interface UseImagePickerProps {
   initialImages: ImageUri[];
@@ -12,6 +14,13 @@ export function useImagePicker({initialImages = []}: UseImagePickerProps) {
   const [imageUris, setImageUris] = useState<ImageUri[]>(initialImages);
 
   const addImageUris = (uris: string[]) => {
+    if (imageUris.length + uris.length > 5) {
+      Alert.alert(
+        alerts.EXCEED_MAX_IMAGE_COUNT.TITLE,
+        alerts.EXCEED_MAX_IMAGE_COUNT.DESCRIPTION,
+      );
+      return;
+    }
     setImageUris(prev => [...prev, ...uris.map(uri => ({uri}))]);
   };
 

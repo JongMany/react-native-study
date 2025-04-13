@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
@@ -7,7 +7,14 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputField from '@/components/InputField';
 import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton';
-import {useCreatePost, useForm, useGetAddress, useModal} from '@/hooks';
+import {
+  useCreatePost,
+  useForm,
+  useGetAddress,
+  useImagePicker,
+  useModal,
+  usePermission,
+} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
 import {getDateWithSeparator, validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
@@ -15,12 +22,16 @@ import {MarkerColor} from '@/models';
 import MarkerSelector from '@/components/MarkerSelector';
 import ScoreInput from '@/components/ScoreInput';
 import DatePickerOption from '@/components/DatePickerOption';
+import ImageInput from '@/components/ImageInput';
+import PreviewImageList from '@/components/PreviewImageList';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
 
 const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const location = route.params.location;
+  usePermission('PHOTO');
+
   const descriptionRef = useRef<TextInput | null>(null);
   const createPost = useCreatePost();
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
@@ -48,6 +59,9 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
     setIsPicked(true);
     hideDatePickerModal();
   };
+  const imagePicker = useImagePicker({
+    initialImages: [],
+  });
 
   const address = useGetAddress(location);
 
@@ -96,6 +110,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
       headerRight: () => AddPostHeaderRight(handleSubmit),
     });
   }, [handleSubmit, navigation]);
+  console.log(imagePicker.imageUris);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -139,6 +154,10 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <View style={styles.imagesViewer}>
+            <ImageInput onChange={imagePicker.handleChange} />
+            <PreviewImageList imageUris={imagePicker.imageUris} />
+          </View>
           <DatePickerOption
             date={date}
             isVisible={isVisible}
