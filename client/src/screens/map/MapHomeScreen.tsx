@@ -20,7 +20,6 @@ import {useGetMarkers, useModal, usePermission, useUserLocation} from '@/hooks';
 import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
 import MarkerModal from '@/components/MarkerModal';
-import Config from 'react-native-config';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,

@@ -1,12 +1,12 @@
 import {getPosts, GetPostsResponseDto} from '@/services';
-import {QueryKey, useInfiniteQuery} from '@tanstack/react-query';
+import {InfiniteData, QueryKey, useInfiniteQuery} from '@tanstack/react-query';
 import {postQueryKey} from './useGetPost';
 import {UseInfiniteQueryCustomOptions} from '@/models';
 
 export const useGetInfinitePosts = (
   queryOptions?: UseInfiniteQueryCustomOptions<
     GetPostsResponseDto,
-    GetPostsResponseDto[], // InfiniteData<GetPostsResponseDto, number> => select 안쓰는 경우
+    InfiniteData<GetPostsResponseDto, number>, // GetPostsResponseDto[] => select 쓰는 경우
     GetPostsResponseDto,
     QueryKey,
     number
@@ -20,9 +20,9 @@ export const useGetInfinitePosts = (
       const lastPost = lastPage[lastPage.length - 1];
       return lastPost ? allPages.length + 1 : undefined;
     },
-    select: data => {
-      return data.pages;
-    },
+    // select: data => {
+    //   return data.pages;
+    // },
     ...queryOptions,
   });
 };
