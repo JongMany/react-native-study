@@ -1,5 +1,6 @@
 import {
   QueryKey,
+  UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query';
@@ -37,4 +38,33 @@ export type UseQueryCustomOptions<
 > = Omit<
   UseQueryOptions<TQueryFnData, ErrorResponse, TData, TQueryKey>,
   'queryFn' | 'queryKey'
+>;
+
+/**
+ * TQueryFnData: 성공 response 타입
+ * TData: select 옵션 타입
+ * TQueryData: initialData, placeholderData 타입
+ * TQueryKey: 쿼리키 타입
+ * TPageParam: 페이지네이션 파라미터 타입 (number, string, cursor 객체 등)
+ */
+export type UseInfiniteQueryCustomOptions<
+  TQueryFnData = unknown,
+  TData = TQueryFnData[],
+  TQueryData = TQueryFnData,
+  TQueryKey extends readonly unknown[] = QueryKey,
+  TPageParam = unknown,
+> = Omit<
+  UseInfiniteQueryOptions<
+    TQueryFnData,
+    ErrorResponse,
+    TData,
+    TQueryData,
+    TQueryKey,
+    TPageParam
+  >,
+  | 'queryFn'
+  | 'queryKey'
+  | 'initialPageParam'
+  | 'getNextPageParam'
+  | 'getPreviousPageParam'
 >;

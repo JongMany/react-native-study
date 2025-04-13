@@ -6,6 +6,7 @@ export const postQueryKey = {
   all: ['post'] as const,
   getPost: () => [...postQueryKey.all, 'getPost'] as const,
   getByPostId: (id: number) => [...postQueryKey.getPost(), id] as const,
+  getPosts: () => [...postQueryKey.all, 'getPosts'] as const,
 } as const;
 
 export const useGetPost = (

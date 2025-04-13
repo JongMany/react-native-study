@@ -25,3 +25,11 @@ export const getPost = async (
   const {data} = await axiosInstance.get(`/posts/${id}`);
   return data;
 };
+
+export type GetPostsResponseDto = CreatePostResponseDto[];
+export const getPosts = async (
+  page: number = 1,
+): Promise<GetPostsResponseDto> => {
+  const {data} = await axiosInstance.get(`/posts/my?page=${page}`);
+  return data;
+};
