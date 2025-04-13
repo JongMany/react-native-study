@@ -6,11 +6,13 @@ import {MarkerColor} from '@/models';
 
 interface MarkerSelectorProps {
   markerColor: MarkerColor;
+  score?: number;
   onPressMarker: (markerColor: MarkerColor) => void;
 }
 
 export default function MarkerSelector({
   markerColor,
+  score = 5,
   onPressMarker,
 }: MarkerSelectorProps) {
   return (
@@ -27,7 +29,7 @@ export default function MarkerSelector({
                   markerColor === color && styles.pressedMarker,
                 ]}
                 onPress={() => onPressMarker(color)}>
-                <CustomMarker color={color} />
+                <CustomMarker color={color} score={score} />
               </Pressable>
             );
           })}

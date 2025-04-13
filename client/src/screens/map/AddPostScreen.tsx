@@ -104,6 +104,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
           />
           <MarkerSelector
             markerColor={markerColor}
+            score={score}
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
