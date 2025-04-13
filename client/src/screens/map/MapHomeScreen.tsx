@@ -91,7 +91,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         customMapStyle={mapStyle}
         zoomTapEnabled={false} // ⛔️ 두 번 탭 줌 비활성화
         zoomControlEnabled={false}
-        zoomEnabled={false}
+        zoomEnabled={true}
         onPress={onPress}
         // onDoublePress={e => console.log('double pressed!', e.nativeEvent)}
         onLongPress={e => console.log('long pressed!', e.nativeEvent)}>

@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputField from '@/components/InputField';
 import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton';
-import {useCreatePost, useForm} from '@/hooks';
+import {useCreatePost, useForm, useGetAddress} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
 import {validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
@@ -22,7 +22,8 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const createPost = useCreatePost();
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
   const [score, setScore] = useState(5);
-  const [address, setAddress] = useState('');
+
+  const address = useGetAddress(location);
 
   const addPost = useForm({
     initialValue: {
@@ -66,7 +67,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
       <ScrollView style={styles.contentContainer}>
         <View style={styles.inputContainer}>
           <InputField
-            value=""
+            value={address}
             disabled
             icon={
               <Octicons name="location" size={16} color={colors.GRAY_500} />

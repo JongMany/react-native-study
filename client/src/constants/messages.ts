@@ -12,3 +12,7 @@ export const alerts = {
     DESCRIPTION: '지도를 길게 누르면 위치가 선택됩니다.',
   },
 } as const;
+
+export const errorMessages = {
+  CANNOT_GET_ADDRESS: '주소를 찾는데 실패했습니다.',
+};

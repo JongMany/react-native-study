@@ -1,3 +1,4 @@
+import {errorMessages} from '@/constants';
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
@@ -26,7 +27,7 @@ export function useGetAddress(location: LatLng) {
         setAddress(result);
       } catch (error: any) {
         console.log(error.response);
-        setAddress('주소를 찾는데 실패했습니다.');
+        setAddress(errorMessages.CANNOT_GET_ADDRESS);
       }
     })();
   }, [latitude, longitude]);
