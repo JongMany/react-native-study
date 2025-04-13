@@ -1,13 +1,13 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import MapView, {
-  Callout,
   LatLng,
   LongPressEvent,
+  MapPressEvent,
   Marker,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -16,11 +16,7 @@ import {alerts, colors, mapNavigations} from '@/constants';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {
-  CompositeNavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
+import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 import {useGetMarkers, usePermission, useUserLocation} from '@/hooks';
 import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
@@ -29,20 +25,7 @@ type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
   DrawerNavigationProp<MainDrawerParamList>
 >;
-export function useRefreshOnFocus<T>(refetch: () => Promise<T>) {
-  const firstTimeRef = React.useRef(true);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (firstTimeRef.current) {
-        firstTimeRef.current = false;
-        return;
-      }
-
-      refetch();
-    }, [refetch]),
-  );
-}
 interface MapHomeScreenProps {}
 
 function MapHomeScreen({}: MapHomeScreenProps) {
@@ -66,10 +49,10 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     });
   };
 
-  const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
-  const handleLongPressMapView = ({nativeEvent}: LongPressEvent) => {
-    setSelectLocation(nativeEvent.coordinate);
-  };
+  const [selectLocation, setSelectLocation] = useState<LatLng | null>({
+    latitude: 53,
+    longitude: 0,
+  });
 
   const hanldePressAddPost = () => {
     if (!selectLocation) {
@@ -84,7 +67,17 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     setSelectLocation(null);
   };
 
-  console.log(markers, selectLocation);
+  const doublePressRef = useRef(0);
+
+  const onPress = (event: MapPressEvent) => {
+    doublePressRef.current = doublePressRef.current + 1;
+    setTimeout(() => (doublePressRef.current = 0), 1000);
+
+    if (doublePressRef.current >= 2) {
+      setSelectLocation(event.nativeEvent.coordinate);
+      doublePressRef.current = 0;
+    }
+  };
 
   return (
     <>
@@ -96,11 +89,16 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         followsUserLocation
         showsMyLocationButton={false}
         customMapStyle={mapStyle}
-        onLongPress={handleLongPressMapView}>
+        zoomTapEnabled={false} // ⛔️ 두 번 탭 줌 비활성화
+        zoomControlEnabled={false}
+        zoomEnabled={false}
+        onPress={onPress}
+        // onDoublePress={e => console.log('double pressed!', e.nativeEvent)}
+        onLongPress={e => console.log('long pressed!', e.nativeEvent)}>
         {markers?.map(({id, color, latitude, longitude}) => {
           return (
             <CustomMarker
-              key={id}
+              key={`${id}-${latitude}-${longitude}-${color}`}
               color={color}
               coordinate={{
                 latitude,
@@ -111,20 +109,27 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         })}
 
         {selectLocation && (
-          // <Callout> </Callout>
-          <Marker coordinate={selectLocation} />
+          <Marker
+            // key={`${selectLocation.latitude}-${selectLocation.longitude}`}
+            coordinate={selectLocation}
+            // shouldRasterizeIOS
+          />
         )}
       </MapView>
+
       <Pressable
         style={[styles.drawerButton, {top: inset.top || 20}]}
         onPress={() => navigation.openDrawer()}>
         <Ionicons name="menu" color={colors.WHITE} size={25} />
       </Pressable>
-      <View style={styles.buttonList}>
+      <View style={styles.buttonList} pointerEvents="box-none">
         <Pressable style={styles.mapButton} onPress={hanldePressAddPost}>
           <MaterialIcons name="add" color={colors.WHITE} size={25} />
         </Pressable>
-        <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
+        <Pressable
+          style={styles.mapButton}
+          onPress={handlePressUserLocation}
+          pointerEvents="box-none">
           <MaterialIcons name="my-location" color={colors.WHITE} size={25} />
         </Pressable>
       </View>

@@ -19,7 +19,7 @@ export const useCreatePost = (
     onSuccess: response => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
-        refetchType: 'all',
+        // refetchType: 'all',
       });
 
       // setQueryData
