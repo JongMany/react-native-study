@@ -1,3 +1,5 @@
+import {MarkerColor} from '@/models';
+
 export const colors = {
   PINK_200: '#FAE2E9',
   PINK_400: '#EC87A5',
@@ -18,3 +20,11 @@ export const colors = {
   GRAY_700: '#575757',
   BLACK: '#000',
 };
+
+export const markerColors: MarkerColor[] = [
+  'BLUE',
+  'GREEN',
+  'PURPLE',
+  'RED',
+  'YELLOW',
+];

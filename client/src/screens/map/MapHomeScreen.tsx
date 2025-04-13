@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import MapView, {
   LatLng,
-  LongPressEvent,
   MapPressEvent,
   Marker,
   PROVIDER_GOOGLE,

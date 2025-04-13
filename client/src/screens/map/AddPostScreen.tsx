@@ -12,6 +12,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import {validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import {MarkerColor} from '@/models';
+import MarkerSelector from '@/components/MarkerSelector';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
@@ -21,6 +22,10 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const descriptionRef = useRef<TextInput | null>(null);
   const createPost = useCreatePost();
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
+  const handleSelectMarker = (name: MarkerColor) => {
+    setMarkerColor(name);
+  };
+
   const [score, setScore] = useState(5);
 
   const address = useGetAddress(location);
@@ -92,6 +97,10 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
             placeholder="기록하고 싶은 내용을 입력하세요. (선택)"
             returnKeyType="next"
             multiline
+          />
+          <MarkerSelector
+            markerColor={markerColor}
+            onPressMarker={handleSelectMarker}
           />
         </View>
       </ScrollView>
