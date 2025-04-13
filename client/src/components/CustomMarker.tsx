@@ -22,22 +22,30 @@ export default function CustomMarker({
   coordinate,
   color,
   score = 5,
-  ...markerDefaultProps
+  ...props
 }: CustomMarkerProps) {
-  return (
-    <Marker coordinate={coordinate} {...markerDefaultProps}>
-      <View style={styles.container}>
-        <View style={[styles.marker, {backgroundColor: colorHex[color]}]}>
-          {/* 표정 - 눈 */}
-          <View style={[styles.eye, styles.leftEye]} />
-          <View style={[styles.eye, styles.rightEye]} />
-          {/* 표정 - 입 */}
-          {score > 3 && <View style={[styles.mouth, styles.good]} />}
-          {score === 3 && <View style={styles.soso} />}
-          {score < 3 && <View style={[styles.mouth, styles.bad]} />}
-        </View>
+  const markerView = (
+    <View style={styles.container}>
+      <View style={[styles.marker, {backgroundColor: colorHex[color]}]}>
+        <View style={[styles.eye, styles.leftEye]} />
+        <View style={[styles.eye, styles.rightEye]} />
+        {score > 3 && <View style={[styles.mouth, styles.good]} />}
+        {score === 3 && <View style={styles.soso} />}
+        {score < 3 && <View style={[styles.mouth, styles.bad]} />}
       </View>
+    </View>
+  );
+
+  return coordinate ? (
+    <Marker
+      key={`${coordinate.latitude}-${coordinate.longitude}-${color}-${score}`}
+      coordinate={coordinate}
+      tracksViewChanges
+      {...props}>
+      {markerView}
     </Marker>
+  ) : (
+    markerView
   );
 }
 
