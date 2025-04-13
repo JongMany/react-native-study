@@ -114,6 +114,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
               color={color}
               coordinate={coordinate}
               onPress={() => handlePressMarker(id, coordinate)}
+              tracksViewChanges={false}
             />
           );
         })}
