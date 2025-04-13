@@ -1,14 +1,26 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import React from 'react';
 import FeedHomeScreen from '@/screens/feed/FeedHomeScreen';
 import {feedNavigations} from '@/constants';
 import FeedHomeHeaderLeft from '@/components/FeedHomeHeaderLeft';
+import {CompositeNavigationProp} from '@react-navigation/native';
+import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {MainDrawerParamList} from '../drawer/MainDrawereNavigator';
 
 export type FeedStackParamList = {
   [feedNavigations.FEED_HOME]: undefined;
-  // [feedNavigations.FEED_DETAIL]: undefined;
+  // [feedNavigations.FEED_DETAIL]: {id: number};
+  // [feedNavigations.EDIT_POST]: {location: LatLng};
 };
 const Stack = createStackNavigator<FeedStackParamList>();
+
+type FeedStackNavigatorProps = CompositeNavigationProp<
+  StackNavigationProp<FeedStackParamList>,
+  DrawerNavigationProp<MainDrawerParamList>
+>;
 
 function FeedStackNavigator() {
   return (
@@ -31,7 +43,8 @@ function FeedStackNavigator() {
         component={FeedHomeScreen}
         options={({navigation}) => ({
           headerTitle: '피드',
-          headerLeft: () => FeedHomeHeaderLeft(navigation),
+          headerLeft: () =>
+            FeedHomeHeaderLeft(navigation as FeedStackNavigatorProps),
         })}
       />
     </Stack.Navigator>
