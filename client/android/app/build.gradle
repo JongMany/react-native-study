@@ -84,6 +84,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.matzipapp"
         vectorDrawables.useSupportLibrary = true
 
     }
@@ -124,4 +125,5 @@ project.ext.vectoricons = [
     iconFontNames: ['MaterialIcons.ttf', 'Ionicons.ttf', 'Octicons.ttf']
 ]
 // apply from file("../../node_modules/react-native-vector-icons/fonts.gradle")
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

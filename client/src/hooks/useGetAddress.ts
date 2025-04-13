@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {Platform} from 'react-native';
 import {LatLng} from 'react-native-maps';
+import Config from 'react-native-config';
 
 export function useGetAddress(location: LatLng) {
   const {latitude, longitude} = location;
@@ -14,9 +15,9 @@ export function useGetAddress(location: LatLng) {
       const language = 'ko';
       const isAndroid = Platform.OS === 'android';
 
-      const API_KEY_IOS = 'AIzaSyCZ5tdRSJdeQSaadna0xe00DVHEejclj24';
-      const API_KEY_ANDROID = 'AIzaSyDwF7ueSWBPCnQxn_YWHqZIGKNQLMUWKZk';
-      const API_KEY = isAndroid ? API_KEY_ANDROID : API_KEY_IOS;
+      const API_KEY = isAndroid
+        ? Config.GOOGLE_MAPS_AOS_API_KEY
+        : Config.GOOGLE_MAPS_IOS_API_KEY;
       const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=${resultType}&language=${language}&key=${API_KEY}`;
       try {
         const {data} = await axios.get(url);

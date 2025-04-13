@@ -18,6 +18,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		83DDFEECC3EA43DAA5C9DA55 /* libPods-MatzipApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */; };
 		DFAD9B3F0C9C5AE149D07092 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		469D1BD0F0D944719B0C6261 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EB9775E5721E4CBC902000FC /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatzipApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBE93E12819EAE940CBBC51 /* Pods-MatzipApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatzipApp.debug.xcconfig"; path = "Target Support Files/Pods-MatzipApp/Pods-MatzipApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EB9775E5721E4CBC902000FC /* Config.xcconfig */ = {isa = PBXFileReference; name = "Config.xcconfig"; path = "Config.xcconfig"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.xcconfig; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				EB9775E5721E4CBC902000FC /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* MatzipApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -178,6 +181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				469D1BD0F0D944719B0C6261 /* Config.xcconfig in Resources */,
 				1A937F692DAB70740024912A /* MaterialIcons.ttf in Resources */,
 				1A937F6B2DAB70790024912A /* Octicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
@@ -412,6 +416,7 @@
 				USE_HERMES = true;
 			};
 			name = Debug;
+			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -484,6 +489,7 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 		};
 /* End XCBuildConfiguration section */
 
