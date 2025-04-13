@@ -58,9 +58,6 @@
 		1A8467E92DA886F200FDD933 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				1A8467EA2DA8874800FDD933 /* Ionicons.ttf */,
-				1A8467EC2DA8875100FDD933 /* MaterialIcons.ttf */,
-				1A8467EE2DA8876400FDD933 /* Octicons.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -174,9 +171,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1A8467ED2DA8875100FDD933 /* MaterialIcons.ttf in Resources */,
-				1A8467EB2DA8874800FDD933 /* Ionicons.ttf in Resources */,
-				1A8467EF2DA8876400FDD933 /* Octicons.ttf in Resources */,
+				1A8467ED2DA8875100FDD933 /* BuildFile in Resources */,
+				1A8467EB2DA8874800FDD933 /* BuildFile in Resources */,
+				1A8467EF2DA8876400FDD933 /* BuildFile in Resources */,
 				DFAD9B3F0C9C5AE149D07092 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,7 +390,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -462,7 +462,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
