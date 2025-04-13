@@ -16,10 +16,9 @@ export const useCreatePost = (
 ) => {
   return useMutation({
     mutationFn: createPost,
-    onSuccess: response => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
-        // refetchType: 'all',
       });
 
       // setQueryData
