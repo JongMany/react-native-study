@@ -8,11 +8,13 @@ import {colors} from '@/constants';
 interface PreviewImageListProps {
   imageUris: ImageUri[];
   onDelete?: (imageUri: string) => void;
+  onChangeOrder?: (fromIndex: number, toIndex: number) => void;
 }
 
 export default function PreviewImageList({
   imageUris,
   onDelete,
+  onChangeOrder,
 }: PreviewImageListProps) {
   const baseUri =
     Platform.OS === 'android'
@@ -38,6 +40,34 @@ export default function PreviewImageList({
               }}>
               <Ionicons name="close" size={16} color={colors.WHITE} />
             </Pressable>
+            {/* 이동 - 좌 */}
+            {index > 0 && (
+              <Pressable
+                style={[styles.imageButton, styles.moveLeftButton]}
+                onPress={() => {
+                  onChangeOrder && onChangeOrder(index, index - 1);
+                }}>
+                <Ionicons
+                  name="arrow-back-outline"
+                  size={16}
+                  color={colors.WHITE}
+                />
+              </Pressable>
+            )}
+            {/* 이동 - 우 */}
+            {index < imageUris.length - 1 && (
+              <Pressable
+                style={[styles.imageButton, styles.moveRightButton]}
+                onPress={() => {
+                  onChangeOrder && onChangeOrder(index, index + 1);
+                }}>
+                <Ionicons
+                  name="arrow-forward-outline"
+                  size={16}
+                  color={colors.WHITE}
+                />
+              </Pressable>
+            )}
           </Pressable>
         ))}
       </View>
@@ -66,6 +96,14 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     top: 0,
+    right: 0,
+  },
+  moveLeftButton: {
+    bottom: 0,
+    left: 0,
+  },
+  moveRightButton: {
+    bottom: 0,
     right: 0,
   },
 });

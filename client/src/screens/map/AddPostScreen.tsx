@@ -1,4 +1,4 @@
-import {Image, Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
@@ -155,8 +155,12 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
           <View style={styles.imagesViewer}>
-            <ImageInput onChange={imagePicker.handleChange} />
-            <PreviewImageList imageUris={imagePicker.imageUris} onDelete={imagePicker.delete} />
+            <ImageInput onChange={imagePicker.add} />
+            <PreviewImageList
+              imageUris={imagePicker.imageUris}
+              onDelete={imagePicker.delete}
+              onChangeOrder={imagePicker.changeOrder}
+            />
           </View>
           <DatePickerOption
             date={date}
