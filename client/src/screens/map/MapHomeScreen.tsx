@@ -89,8 +89,11 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         zoomControlEnabled={false}
         zoomEnabled={true}
         onPress={onPress}
-        // onDoublePress={e => console.log('double pressed!', e.nativeEvent)}
-        onLongPress={e => console.log('long pressed!', e.nativeEvent)}>
+        region={{
+          ...userLocation,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}>
         {markers?.map(({id, color, latitude, longitude}) => {
           return (
             <CustomMarker
