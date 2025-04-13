@@ -48,10 +48,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     });
   };
 
-  const [selectLocation, setSelectLocation] = useState<LatLng | null>({
-    latitude: 53,
-    longitude: 0,
-  });
+  const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
 
   const hanldePressAddPost = () => {
     if (!selectLocation) {

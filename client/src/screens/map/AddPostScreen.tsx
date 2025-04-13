@@ -9,11 +9,12 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton';
 import {useCreatePost, useForm, useGetAddress} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
-import {validateAddPost} from '@/utils';
+import {getDateWithSeparator, validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
 import {MarkerColor} from '@/models';
 import MarkerSelector from '@/components/MarkerSelector';
 import ScoreInput from '@/components/ScoreInput';
+import DatePickerOption from '@/components/DatePickerOption';
 
 interface AddPostScreenProps
   extends StackScreenProps<MapStackParamList, typeof mapNavigations.ADD_POST> {}
@@ -32,6 +33,24 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
     setScore(newScore);
   };
 
+  const [date, setDate] = useState(new Date());
+  const [isPicked, setIsPicked] = useState(false);
+  const handleChangeDate = (pickedDate: Date) => {
+    setDate(pickedDate);
+  };
+  const [isVisible, setIsVisible] = useState(false);
+
+  const showDatePickerModal = () => {
+    setIsVisible(true);
+  };
+  const hideDatePickerModal = () => {
+    setIsVisible(false);
+  };
+  const handleConfirmDate = () => {
+    setIsPicked(true);
+    hideDatePickerModal();
+  };
+
   const address = useGetAddress(location);
 
   const addPost = useForm({
@@ -44,7 +63,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
 
   const handleSubmit = useCallback(() => {
     const createPostRequestDto = {
-      date: new Date(),
+      date,
       title: addPost.form.title,
       description: addPost.form.description,
       color: markerColor,
@@ -62,7 +81,16 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
         console.log(error.response);
       },
     });
-  }, [addPost, address, location, score, markerColor, createPost, navigation]);
+  }, [
+    date,
+    addPost,
+    address,
+    location,
+    score,
+    markerColor,
+    createPost,
+    navigation,
+  ]);
 
   useEffect(() => {
     // Header에 추가
@@ -82,7 +110,12 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
               <Octicons name="location" size={16} color={colors.GRAY_500} />
             }
           />
-          <CustomButton variant="outlined" size="large" label="날짜 선택" />
+          <CustomButton
+            variant="outlined"
+            size="large"
+            label={isPicked ? getDateWithSeparator(date, '. ') : '날짜 선택'}
+            onPress={showDatePickerModal}
+          />
           <InputField
             {...addPost.getTextInputProps('title')}
             error={addPost.errors.title}
@@ -108,6 +141,12 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <DatePickerOption
+            date={date}
+            isVisible={isVisible}
+            onChangeDate={handleChangeDate}
+            onConfirmDate={handleConfirmDate}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

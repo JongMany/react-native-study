@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
   },
   large: {
     width: '100%',
-    paddingVertical: deviceHeight > 700 ? 15 : 10,
+    paddingVertical: deviceHeight > 700 ? 12 : 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
   medium: {
     width: '50%',
-    paddingVertical: deviceHeight > 700 ? 12 : 8,
+    paddingVertical: deviceHeight > 700 ? 10 : 8,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
