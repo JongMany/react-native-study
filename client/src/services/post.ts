@@ -4,7 +4,7 @@ import {axiosInstance} from './axios-instance';
 export type CreatePostRequestDto = Omit<Post, 'id'> & {
   imageUris: ImageUri[];
 };
-export type CreatePostResponseDto = Post & {imageUri: ImageUri[]};
+export type CreatePostResponseDto = Post & {images: ImageUri[]};
 
 export const createPost = async (
   body: CreatePostRequestDto,

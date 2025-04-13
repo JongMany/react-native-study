@@ -81,7 +81,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
       color: markerColor,
       score: score,
       address,
-      imageUris: [],
+      imageUris: imagePicker.imageUris,
       ...location,
     };
     createPost.mutate(createPostRequestDto, {
@@ -102,6 +102,7 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
     markerColor,
     createPost,
     navigation,
+    imagePicker.imageUris,
   ]);
 
   useEffect(() => {
@@ -110,7 +111,6 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
       headerRight: () => AddPostHeaderRight(handleSubmit),
     });
   }, [handleSubmit, navigation]);
-  console.log(imagePicker.imageUris);
 
   return (
     <SafeAreaView style={styles.container}>

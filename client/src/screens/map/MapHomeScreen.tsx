@@ -16,9 +16,10 @@ import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
-import {useGetMarkers, usePermission, useUserLocation} from '@/hooks';
+import {useGetMarkers, useModal, usePermission, useUserLocation} from '@/hooks';
 import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
+import MarkerModal from '@/components/MarkerModal';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
@@ -36,16 +37,19 @@ function MapHomeScreen({}: MapHomeScreenProps) {
 
   usePermission('LOCATION');
 
+  const moveMapView = (coordinate: LatLng) => {
+    mapRef.current?.animateToRegion({
+      ...coordinate,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    });
+  };
+
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
       return;
     }
-    mapRef.current?.animateToRegion({
-      latitude: userLocation?.latitude,
-      longitude: userLocation?.longitude,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
+    moveMapView(userLocation);
   };
 
   const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
@@ -61,6 +65,15 @@ function MapHomeScreen({}: MapHomeScreenProps) {
       location: selectLocation,
     });
     setSelectLocation(null);
+  };
+
+  const {isVisible, show, hide} = useModal();
+
+  const [markerId, setMarkerId] = useState<number | null>(null);
+  const handlePressMarker = (id: number, coordinate: LatLng) => {
+    moveMapView(coordinate);
+    setMarkerId(id);
+    show();
   };
 
   const doublePressRef = useRef(0);
@@ -94,15 +107,13 @@ function MapHomeScreen({}: MapHomeScreenProps) {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}>
-        {markers?.map(({id, color, latitude, longitude}) => {
+        {markers?.map(({id, color, ...coordinate}) => {
           return (
             <CustomMarker
-              key={`${id}-${latitude}-${longitude}-${color}`}
+              key={id}
               color={color}
-              coordinate={{
-                latitude,
-                longitude,
-              }}
+              coordinate={coordinate}
+              onPress={() => handlePressMarker(id, coordinate)}
             />
           );
         })}
@@ -132,6 +143,9 @@ function MapHomeScreen({}: MapHomeScreenProps) {
           <MaterialIcons name="my-location" color={colors.WHITE} size={25} />
         </Pressable>
       </View>
+
+      {/* 마커 모달 */}
+      <MarkerModal markerId={markerId} isVisible={isVisible} hide={hide} />
     </>
   );
 }
