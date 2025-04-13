@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import InputField from '@/components/InputField';
 import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton';
-import {useCreatePost, useForm, useGetAddress} from '@/hooks';
+import {useCreatePost, useForm, useGetAddress, useModal} from '@/hooks';
 import {TextInput} from 'react-native-gesture-handler';
 import {getDateWithSeparator, validateAddPost} from '@/utils';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight';
@@ -38,14 +38,12 @@ const AddPostScreen = ({route, navigation}: AddPostScreenProps) => {
   const handleChangeDate = (pickedDate: Date) => {
     setDate(pickedDate);
   };
-  const [isVisible, setIsVisible] = useState(false);
+  const {
+    isVisible,
+    show: showDatePickerModal,
+    hide: hideDatePickerModal,
+  } = useModal();
 
-  const showDatePickerModal = () => {
-    setIsVisible(true);
-  };
-  const hideDatePickerModal = () => {
-    setIsVisible(false);
-  };
   const handleConfirmDate = () => {
     setIsPicked(true);
     hideDatePickerModal();
