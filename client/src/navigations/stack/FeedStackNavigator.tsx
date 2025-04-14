@@ -4,15 +4,16 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import FeedHomeScreen from '@/screens/feed/FeedHomeScreen';
-import {feedNavigations} from '@/constants';
+import {colors, feedNavigations} from '@/constants';
 import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {MainDrawerParamList} from '../drawer/MainDrawereNavigator';
+import FeedDetailScreen from '@/screens/feed/FeedDetailScreen';
 
 export type FeedStackParamList = {
   [feedNavigations.FEED_HOME]: undefined;
-  // [feedNavigations.FEED_DETAIL]: {id: number};
+  [feedNavigations.FEED_DETAIL]: {id: number};
   // [feedNavigations.EDIT_POST]: {location: LatLng};
 };
 const Stack = createStackNavigator<FeedStackParamList>();
@@ -46,6 +47,17 @@ function FeedStackNavigator() {
           headerLeft: () =>
             FeedHomeHeaderLeft(navigation as FeedStackNavigatorProps),
         })}
+      />
+      <Stack.Screen
+        name={feedNavigations.FEED_DETAIL}
+        component={FeedDetailScreen}
+        options={{
+          headerTitle: '',
+          headerShown: false,
+          cardStyle: {
+            backgroundColor: colors.GRAY_100,
+          },
+        }}
       />
     </Stack.Navigator>
   );
