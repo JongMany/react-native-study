@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import FeedHomeScreen from '@/screens/feed/FeedHomeScreen';
 import {feedNavigations} from '@/constants';
-import FeedHomeHeaderLeft from '@/components/FeedHomeHeaderLeft';
+import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {MainDrawerParamList} from '../drawer/MainDrawereNavigator';
