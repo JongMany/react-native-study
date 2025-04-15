@@ -9,11 +9,13 @@ interface PreviewImageListProps {
   imageUris: ImageUri[];
   onDelete?: (imageUri: string) => void;
   onChangeOrder?: (fromIndex: number, toIndex: number) => void;
+  showOptions?: boolean;
 }
 
 export default function PreviewImageList({
   imageUris,
   onDelete,
+  showOptions = false,
   onChangeOrder,
 }: PreviewImageListProps) {
   const baseUri =
@@ -32,41 +34,45 @@ export default function PreviewImageList({
               }}
               style={styles.image}
             />
-            {/* Delete Button */}
-            <Pressable
-              style={[styles.imageButton, styles.deleteButton]}
-              onPress={() => {
-                onDelete && onDelete(uri);
-              }}>
-              <Ionicons name="close" size={16} color={colors.WHITE} />
-            </Pressable>
-            {/* 이동 - 좌 */}
-            {index > 0 && (
-              <Pressable
-                style={[styles.imageButton, styles.moveLeftButton]}
-                onPress={() => {
-                  onChangeOrder && onChangeOrder(index, index - 1);
-                }}>
-                <Ionicons
-                  name="arrow-back-outline"
-                  size={16}
-                  color={colors.WHITE}
-                />
-              </Pressable>
-            )}
-            {/* 이동 - 우 */}
-            {index < imageUris.length - 1 && (
-              <Pressable
-                style={[styles.imageButton, styles.moveRightButton]}
-                onPress={() => {
-                  onChangeOrder && onChangeOrder(index, index + 1);
-                }}>
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={16}
-                  color={colors.WHITE}
-                />
-              </Pressable>
+            {showOptions && (
+              <>
+                {/* Delete Button */}
+                <Pressable
+                  style={[styles.imageButton, styles.deleteButton]}
+                  onPress={() => {
+                    onDelete && onDelete(uri);
+                  }}>
+                  <Ionicons name="close" size={16} color={colors.WHITE} />
+                </Pressable>
+                {/* 이동 - 좌 */}
+                {index > 0 && (
+                  <Pressable
+                    style={[styles.imageButton, styles.moveLeftButton]}
+                    onPress={() => {
+                      onChangeOrder && onChangeOrder(index, index - 1);
+                    }}>
+                    <Ionicons
+                      name="arrow-back-outline"
+                      size={16}
+                      color={colors.WHITE}
+                    />
+                  </Pressable>
+                )}
+                {/* 이동 - 우 */}
+                {index < imageUris.length - 1 && (
+                  <Pressable
+                    style={[styles.imageButton, styles.moveRightButton]}
+                    onPress={() => {
+                      onChangeOrder && onChangeOrder(index, index + 1);
+                    }}>
+                    <Ionicons
+                      name="arrow-forward-outline"
+                      size={16}
+                      color={colors.WHITE}
+                    />
+                  </Pressable>
+                )}
+              </>
             )}
           </Pressable>
         ))}
