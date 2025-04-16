@@ -55,6 +55,7 @@ export default function MarkerModal({
     navigation.navigate(mainNavigations.Feed, {
       screen: feedNavigations.FEED_DETAIL,
       params: {id: post.id},
+      initial: false,
     });
   };
 
