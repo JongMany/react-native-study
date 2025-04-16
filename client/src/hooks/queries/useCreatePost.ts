@@ -7,6 +7,7 @@ import {
 } from '@/services';
 import {useMutation} from '@tanstack/react-query';
 import {markerQueryKey} from './useGetMarkers';
+import {postQueryKey} from './useGetPost';
 
 export const useCreatePost = (
   mutationOptions?: UseMutationCustomOptions<
@@ -19,6 +20,9 @@ export const useCreatePost = (
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: postQueryKey.getPosts(),
       });
 
       // setQueryData
