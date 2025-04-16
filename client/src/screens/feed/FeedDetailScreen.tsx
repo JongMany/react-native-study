@@ -2,6 +2,7 @@ import {
   Dimensions,
   Image,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -17,6 +18,8 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getDateLocaleFormat} from '@/utils';
 import PreviewImageList from '@/components/common/PreviewImageList';
+import CustomButton from '@/components/common/CustomButton';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface FeedDetailScreenProps
   extends StackScreenProps<
@@ -30,6 +33,7 @@ export default function FeedDetailScreen({
 }: FeedDetailScreenProps) {
   const {id} = route.params;
   const {data: post, isPending, isError} = useGetPost(id);
+  const insets = useSafeAreaInsets();
   const baseUri =
     Platform.OS === 'android'
       ? 'http://10.0.2.2:3030'
@@ -38,87 +42,121 @@ export default function FeedDetailScreen({
     return <></>;
   }
 
+  const handlePressLocation = () => {};
+
   return (
-    <ScrollView style={styles.container}>
-      <SafeAreaView style={styles.headerContainer}>
-        <View style={styles.header}>
-          <Octicons
-            name="arrow-left"
-            size={30}
-            color={colors.WHITE}
-            onPress={() => navigation.goBack()}
-          />
-          <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} />
-        </View>
-      </SafeAreaView>
+    <>
+      <ScrollView
+        style={
+          insets.bottom
+            ? [styles.container, {marginBottom: insets.bottom + 50}]
+            : [styles.container, styles.scrollNoInsets]
+        }
+        scrollIndicatorInsets={{right: 1}}>
+        <SafeAreaView style={styles.headerContainer}>
+          <View style={styles.header}>
+            <Octicons
+              name="arrow-left"
+              size={30}
+              color={colors.WHITE}
+              onPress={() => navigation.goBack()}
+            />
+            <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} />
+          </View>
+        </SafeAreaView>
 
-      <View style={styles.imageContainer}>
-        {post && post?.images?.length > 0 && (
-          <Image
-            style={styles.image}
-            source={{
-              uri: `${baseUri}/${post?.images[0].uri}`,
-            }}
-            resizeMode="cover"
-          />
-        )}
-        {post.images.length === 0 && (
-          <View style={styles.emptyImageContainer}>
-            <Text>No Image</Text>
-          </View>
-        )}
-      </View>
-      <View style={styles.contentsContainer}>
-        <View style={styles.addressContainer}>
-          <Octicons name="location" size={10} color={colors.GRAY_500} />
-          <Text
-            style={styles.addressText}
-            ellipsizeMode="tail"
-            numberOfLines={1}>
-            {post.address}
-          </Text>
+        <View style={styles.imageContainer}>
+          {post && post?.images?.length > 0 && (
+            <Image
+              style={styles.image}
+              source={{
+                uri: `${baseUri}/${post?.images[0].uri}`,
+              }}
+              resizeMode="cover"
+            />
+          )}
+          {post.images.length === 0 && (
+            <View style={styles.emptyImageContainer}>
+              <Text>No Image</Text>
+            </View>
+          )}
         </View>
-        <Text style={styles.titleText}>{post.title}</Text>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoRow}>
-            <View style={styles.infoColumn}>
-              <Text style={styles.infoColumnKeyText}>방문날짜</Text>
-              <Text style={styles.infoColumnValueText}>
-                {getDateLocaleFormat(post.date)}
-              </Text>
+        <View style={styles.contentsContainer}>
+          <View style={styles.addressContainer}>
+            <Octicons name="location" size={10} color={colors.GRAY_500} />
+            <Text
+              style={styles.addressText}
+              ellipsizeMode="tail"
+              numberOfLines={1}>
+              {post.address}
+            </Text>
+          </View>
+          <Text style={styles.titleText}>{post.title}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.infoRow}>
+              <View style={styles.infoColumn}>
+                <Text style={styles.infoColumnKeyText}>방문날짜</Text>
+                <Text style={styles.infoColumnValueText}>
+                  {getDateLocaleFormat(post.date)}
+                </Text>
+              </View>
+              <View style={styles.infoColumn}>
+                <Text style={styles.infoColumnKeyText}>평점</Text>
+                <Text style={styles.infoColumnValueText}>{post.score}점</Text>
+              </View>
             </View>
-            <View style={styles.infoColumn}>
-              <Text style={styles.infoColumnKeyText}>평점</Text>
-              <Text style={styles.infoColumnValueText}>{post.score}점</Text>
+            <View style={styles.infoRow}>
+              <View style={styles.infoColumn}>
+                <Text style={styles.infoColumnKeyText}>마커색상</Text>
+                <View
+                  style={[
+                    styles.markerColor,
+                    {backgroundColor: colorHex[post.color]},
+                  ]}
+                />
+              </View>
             </View>
           </View>
-          <View style={styles.infoRow}>
-            <View style={styles.infoColumn}>
-              <Text style={styles.infoColumnKeyText}>마커색상</Text>
-              <View
-                style={[
-                  styles.markerColor,
-                  {backgroundColor: colorHex[post.color]},
-                ]}
-              />
-            </View>
-          </View>
+          <Text style={styles.descriptionText}>{post.description}</Text>
         </View>
-        <Text style={styles.descriptionText}>{post.description}</Text>
-      </View>
 
-      {post.images.length > 0 && (
-        <View style={styles.imageContentsContainer}>
-          <PreviewImageList imageUris={post.images} />
+        {post.images.length > 0 && (
+          <View style={styles.imageContentsContainer}>
+            <PreviewImageList imageUris={post.images} />
+          </View>
+        )}
+      </ScrollView>
+      <View style={[styles.bottomContainer, {paddingBottom: insets.bottom}]}>
+        <View
+          style={[
+            styles.tabContainer,
+            insets.bottom === 0 && styles.tabContainerNoInsets,
+          ]}>
+          <Pressable
+            style={({pressed}) => [
+              pressed && styles.bookmarkPressedContainer,
+              styles.bookmarkContainer,
+            ]}>
+            <Octicons name="star-fill" size={30} color={colors.GRAY_100} />
+          </Pressable>
+          <CustomButton
+            label="위치보기"
+            size="medium"
+            variant="filled"
+            onPress={handlePressLocation}
+          />
         </View>
-      )}
-    </ScrollView>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
+  },
+  scrollNoInsets: {
+    marginBottom: 65,
   },
   headerContainer: {
     position: 'absolute',
@@ -130,7 +168,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    alignItems: 'center',
     paddingVertical: 10,
   },
   imageContainer: {
@@ -142,7 +179,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   emptyImageContainer: {
-    width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').width,
     justifyContent: 'center',
     alignItems: 'center',
