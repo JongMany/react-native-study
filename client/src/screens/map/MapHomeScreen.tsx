@@ -11,7 +11,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {alerts, colors, mapNavigations} from '@/constants';
+import {alerts, colors, mapNavigations, numbers} from '@/constants';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
@@ -39,7 +39,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
   const navigation = useNavigation<Navigation>();
   const {userLocation, isUserLocationError} = useUserLocation();
   const {data: markers = []} = useGetMarkers();
-  const {mapRef, moveMapView} = useMoveMapView();
+  const {mapRef, moveMapView, handleChangeDelta} = useMoveMapView();
 
   usePermission('LOCATION');
 
@@ -102,9 +102,9 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         onPress={onPress}
         region={{
           ...userLocation,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
+          ...numbers.INITIAL_DELTA,
+        }}
+        onRegionChangeComplete={handleChangeDelta}>
         {markers?.map(({id, color, ...coordinate}) => {
           return (
             <CustomMarker
