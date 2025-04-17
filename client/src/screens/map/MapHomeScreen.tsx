@@ -16,7 +16,13 @@ import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
-import {useGetMarkers, useModal, usePermission, useUserLocation} from '@/hooks';
+import {
+  useGetMarkers,
+  useModal,
+  useMoveMapView,
+  usePermission,
+  useUserLocation,
+} from '@/hooks';
 import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/common/CustomMarker';
 import MarkerModal from '@/components/map/MarkerModal';
@@ -31,19 +37,11 @@ interface MapHomeScreenProps {}
 function MapHomeScreen({}: MapHomeScreenProps) {
   const inset = useSafeAreaInsets();
   const navigation = useNavigation<Navigation>();
-  const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
   const {data: markers = []} = useGetMarkers();
+  const {mapRef, moveMapView} = useMoveMapView();
 
   usePermission('LOCATION');
-
-  const moveMapView = (coordinate: LatLng) => {
-    mapRef.current?.animateToRegion({
-      ...coordinate,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-  };
 
   const handlePressUserLocation = () => {
     if (isUserLocationError) {

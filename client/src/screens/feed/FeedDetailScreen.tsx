@@ -12,7 +12,13 @@ import {
 import React from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {FeedStackParamList} from '@/navigations/stack/FeedStackNavigator';
-import {colorHex, colors, feedNavigations} from '@/constants';
+import {
+  colorHex,
+  colors,
+  feedNavigations,
+  mainNavigations,
+  mapNavigations,
+} from '@/constants';
 import {useGetPost} from '@/hooks';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,11 +26,15 @@ import {getDateLocaleFormat} from '@/utils';
 import PreviewImageList from '@/components/common/PreviewImageList';
 import CustomButton from '@/components/common/CustomButton';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import useLocationStore from '@/store/useLocationStore';
+import {CompositeScreenProps} from '@react-navigation/native';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 
 interface FeedDetailScreenProps
-  extends StackScreenProps<
-    FeedStackParamList,
-    typeof feedNavigations.FEED_DETAIL
+  extends CompositeScreenProps<
+    StackScreenProps<FeedStackParamList, typeof feedNavigations.FEED_DETAIL>,
+    DrawerScreenProps<MainDrawerParamList>
   > {}
 
 export default function FeedDetailScreen({
@@ -38,11 +48,21 @@ export default function FeedDetailScreen({
     Platform.OS === 'android'
       ? 'http://10.0.2.2:3030'
       : 'http://localhost:3030';
+  const {setMoveLocation} = useLocationStore();
   if (isPending || isError) {
     return <></>;
   }
 
-  const handlePressLocation = () => {};
+  const handlePressLocation = () => {
+    const {latitude, longitude} = post;
+    setMoveLocation({
+      latitude,
+      longitude,
+    });
+    navigation.navigate(mainNavigations.HOME, {
+      screen: mapNavigations.MAP_HOME,
+    });
+  };
 
   return (
     <>
