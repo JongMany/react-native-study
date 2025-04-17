@@ -19,7 +19,7 @@ import {
   mainNavigations,
   mapNavigations,
 } from '@/constants';
-import {useGetPost} from '@/hooks';
+import {useGetPost, useModal} from '@/hooks';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getDateLocaleFormat} from '@/utils';
@@ -30,6 +30,7 @@ import useLocationStore from '@/store/useLocationStore';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import FeedDetailOption from '@/components/feed/FeedDetailOption';
 
 interface FeedDetailScreenProps
   extends CompositeScreenProps<
@@ -49,6 +50,7 @@ export default function FeedDetailScreen({
       ? 'http://10.0.2.2:3030'
       : 'http://localhost:3030';
   const {setMoveLocation} = useLocationStore();
+  const {isVisible, hide, show} = useModal();
   if (isPending || isError) {
     return <></>;
   }
@@ -81,7 +83,12 @@ export default function FeedDetailScreen({
               color={colors.WHITE}
               onPress={() => navigation.goBack()}
             />
-            <Ionicons name="ellipsis-vertical" size={30} color={colors.WHITE} />
+            <Ionicons
+              name="ellipsis-vertical"
+              size={30}
+              color={colors.WHITE}
+              onPress={show}
+            />
           </View>
         </SafeAreaView>
 
@@ -167,6 +174,8 @@ export default function FeedDetailScreen({
           />
         </View>
       </View>
+
+      <FeedDetailOption isVisible={isVisible} hideOption={hide} />
     </>
   );
 }
