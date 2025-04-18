@@ -1,5 +1,5 @@
 import {colors} from '@/constants';
-import {PropsWithChildren} from 'react';
+import {createContext, PropsWithChildren, useContext} from 'react';
 import {
   GestureResponderEvent,
   Modal,
@@ -11,6 +11,11 @@ import {
   Text,
   View,
 } from 'react-native';
+
+type OptionConetxtValue = {
+  onClickOutSide: (event: GestureResponderEvent) => void;
+};
+const OptionContext = createContext<OptionConetxtValue | undefined>(undefined);
 
 interface OptionMainProps extends ModalProps {
   isVisible: boolean;
@@ -36,10 +41,24 @@ function OptionMain({
       animationType={animationType}
       onRequestClose={hideOption}
       {...modalProps}>
-      <SafeAreaView style={styles.optionBackground} onTouchEnd={onClickOutSide}>
+      <OptionContext.Provider
+        value={{
+          onClickOutSide,
+        }}>
         {children}
-      </SafeAreaView>
+      </OptionContext.Provider>
     </Modal>
+  );
+}
+
+function Background({children}: PropsWithChildren) {
+  const optionContext = useContext(OptionContext);
+  return (
+    <SafeAreaView
+      style={styles.optionBackground}
+      onTouchEnd={optionContext?.onClickOutSide}>
+      {children}
+    </SafeAreaView>
   );
 }
 
@@ -129,6 +148,7 @@ const styles = StyleSheet.create({
 });
 
 const CompoundOption = Object.assign(OptionMain, {
+  Background,
   Container,
   Button,
   Title,
