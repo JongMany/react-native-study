@@ -4,3 +4,4 @@ export * from './useGetMarkers';
 export * from './useUploadImages';
 export * from './useGetPost';
 export * from './useGetInfinitePosts';
+export * from './useDeletePost';

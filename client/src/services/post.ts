@@ -33,3 +33,12 @@ export const getPosts = async (
   const {data} = await axiosInstance.get(`/posts/my?page=${page}`);
   return data;
 };
+
+export type DeletePostRequestDto = number;
+export type DeletePostResponseDto = number; // deleted post id
+export const deletePost = async (
+  deletePostId: DeletePostRequestDto,
+): Promise<DeletePostResponseDto> => {
+  const {data} = await axiosInstance.delete(`/posts/${deletePostId}`);
+  return data;
+};
