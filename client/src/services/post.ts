@@ -42,3 +42,17 @@ export const deletePost = async (
   const {data} = await axiosInstance.delete(`/posts/${deletePostId}`);
   return data;
 };
+
+export type UpdatePostRequestDto = {
+  id: number;
+  body: Omit<CreatePostRequestDto, 'id' | 'longitute' | 'latitude' | 'address'>;
+};
+export type UpdatePostResponseDto = CreatePostResponseDto;
+export const updatePost = async ({
+  id,
+  body,
+}: UpdatePostRequestDto): Promise<UpdatePostResponseDto> => {
+  const {data} = await axiosInstance.patch(`/posts/${id}`, body);
+
+  return data;
+};

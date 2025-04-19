@@ -26,6 +26,7 @@ import {LatLng} from 'react-native-maps';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {FeedStackParamList} from '@/navigations/stack/FeedStackNavigator';
+import useDetailPostStore from '@/store/useDetailPostStore';
 
 interface PostFormProps {
   isEdit?: boolean;
@@ -34,21 +35,27 @@ interface PostFormProps {
 
 export default function PostForm({location, isEdit = false}: PostFormProps) {
   const navigation = useNavigation<StackNavigationProp<FeedStackParamList>>();
+  const {detailPost} = useDetailPostStore();
+  const isEditMode = isEdit && detailPost;
   usePermission('PHOTO');
 
   const descriptionRef = useRef<TextInput | null>(null);
   const createPost = useCreatePost();
-  const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
+  const [markerColor, setMarkerColor] = useState<MarkerColor>(
+    isEditMode ? detailPost.color : 'RED',
+  );
   const handleSelectMarker = (name: MarkerColor) => {
     setMarkerColor(name);
   };
 
-  const [score, setScore] = useState(5);
+  const [score, setScore] = useState(isEditMode ? detailPost.score : 5);
   const handleChangeScore = (newScore: number) => {
     setScore(newScore);
   };
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    isEditMode ? new Date(String(detailPost.date)) : new Date(),
+  );
   const [isPicked, setIsPicked] = useState(false);
   const handleChangeDate = (pickedDate: Date) => {
     setDate(pickedDate);
@@ -64,21 +71,21 @@ export default function PostForm({location, isEdit = false}: PostFormProps) {
     hideDatePickerModal();
   };
   const imagePicker = useImagePicker({
-    initialImages: [],
+    initialImages: isEditMode ? detailPost.images : [],
   });
 
   const address = useGetAddress(location);
 
   const addPost = useForm({
     initialValue: {
-      title: '',
-      description: '',
+      title: isEditMode ? detailPost.title : '',
+      description: isEditMode ? detailPost.description : '',
     },
     validate: validateAddPost,
   });
 
   const handleSubmit = useCallback(() => {
-    const createPostRequestDto = {
+    const mutatePostRequestDto = {
       date,
       title: addPost.form.title,
       description: addPost.form.description,
@@ -88,15 +95,18 @@ export default function PostForm({location, isEdit = false}: PostFormProps) {
       imageUris: imagePicker.imageUris,
       ...location,
     };
-    createPost.mutate(createPostRequestDto, {
-      onSuccess: () => {
-        navigation.goBack();
-      },
-      onError: error => {
-        // Error 처리
-        console.log(error.response);
-      },
-    });
+    if (isEditMode) {
+    } else {
+      createPost.mutate(mutatePostRequestDto, {
+        onSuccess: () => {
+          navigation.goBack();
+        },
+        onError: error => {
+          // Error 처리
+          console.log(error.response);
+        },
+      });
+    }
   }, [
     date,
     addPost,
@@ -107,6 +117,7 @@ export default function PostForm({location, isEdit = false}: PostFormProps) {
     createPost,
     navigation,
     imagePicker.imageUris,
+    isEditMode,
   ]);
 
   useEffect(() => {
