@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {FeedStackParamList} from '@/navigations/stack/FeedStackNavigator';
 import {
@@ -31,6 +31,7 @@ import {CompositeScreenProps} from '@react-navigation/native';
 import {DrawerScreenProps} from '@react-navigation/drawer';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
 import FeedDetailOption from '@/components/feed/FeedDetailOption';
+import useDetailPostStore from '@/store/useDetailPostStore';
 
 interface FeedDetailScreenProps
   extends CompositeScreenProps<
@@ -51,6 +52,12 @@ export default function FeedDetailScreen({
       : 'http://localhost:3030';
   const {setMoveLocation} = useLocationStore();
   const {isVisible, hide, show} = useModal();
+  const {setDetailPost} = useDetailPostStore();
+
+  useEffect(() => {
+    post && setDetailPost(post);
+  }, [post, setDetailPost]);
+
   if (isPending || isError) {
     return <></>;
   }
