@@ -4,7 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import {postQueryKey} from './useGetPost';
 import {markerQueryKey} from './useGetMarkers';
 
-export const useUpdatePost = (mutationOptions: UseMutationCustomOptions) => {
+export const useUpdatePost = (mutationOptions?: UseMutationCustomOptions) => {
   return useMutation({
     mutationFn: updatePost,
     onSuccess: newPost => {
