@@ -14,7 +14,7 @@ export const useGetInfiniteFavoritePosts = (
 ) => {
   return useInfiniteQuery({
     queryFn: ({pageParam}) => getFavoritePosts(pageParam),
-    queryKey: [postQueryKey.getFavoritePosts()],
+    queryKey: postQueryKey.getFavoritePosts(),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const lastPost = lastPage[lastPage.length - 1];

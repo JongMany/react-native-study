@@ -12,6 +12,9 @@ export const useUpdateFavoritePost = (
       queryClient.invalidateQueries({
         queryKey: postQueryKey.getByPostId(updatedId),
       });
+      queryClient.invalidateQueries({
+        queryKey: postQueryKey.getFavoritePosts(),
+      });
     },
     ...mutationOptions,
   });
