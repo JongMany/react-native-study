@@ -26,9 +26,10 @@ export const getPost = async (
   return data;
 };
 
+export type GetPostsRequestDto = number;
 export type GetPostsResponseDto = CreatePostResponseDto[];
 export const getPosts = async (
-  page: number = 1,
+  page: GetPostsRequestDto = 1,
 ): Promise<GetPostsResponseDto> => {
   const {data} = await axiosInstance.get(`/posts/my?page=${page}`);
   return data;
@@ -53,6 +54,25 @@ export const updatePost = async ({
   body,
 }: UpdatePostRequestDto): Promise<UpdatePostResponseDto> => {
   const {data} = await axiosInstance.patch(`/posts/${id}`, body);
+
+  return data;
+};
+
+export type GetFavoritePostsRequestDto = number;
+export type GetFavoritePostsResponseDto = CreatePostResponseDto[];
+export const getFavoritePosts = async (
+  page: GetFavoritePostsRequestDto = 1,
+): Promise<GetFavoritePostsResponseDto> => {
+  const {data} = await axiosInstance.get(`/favorites/my?page=${page}`);
+  return data;
+};
+
+export type UpdatePostFavoriteRequestDto = number;
+export type UpdatePostFavoriteResponseDto = number;
+export const updateFavoritePost = async (
+  id: UpdatePostFavoriteRequestDto,
+): Promise<UpdatePostFavoriteResponseDto> => {
+  const {data} = await axiosInstance.post(`/favorites/${id}`);
 
   return data;
 };
