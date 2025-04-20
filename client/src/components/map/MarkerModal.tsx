@@ -11,16 +11,21 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useGetPost} from '@/hooks';
-import {colors, feedNavigations, mainNavigations} from '@/constants';
+import {
+  colors,
+  feedNavigations,
+  feedTabNavigations,
+  mainNavigations,
+} from '@/constants';
 import CustomMarker from '../common/CustomMarker';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getDateWithSeparator} from '@/utils';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {FeedStackParamList} from '@/navigations/stack/FeedStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {FeedTabParamList} from '@/navigations/tab/FeedTabNavigator';
 
 interface MarkerModalProps {
   markerId: number | null;
@@ -30,7 +35,7 @@ interface MarkerModalProps {
 
 type Navigation = CompositeNavigationProp<
   DrawerNavigationProp<MainDrawerParamList>,
-  StackNavigationProp<FeedStackParamList>
+  BottomTabNavigationProp<FeedTabParamList>
 >;
 
 export default function MarkerModal({
@@ -53,9 +58,14 @@ export default function MarkerModal({
   const handlePressModal = () => {
     // main navigation -> feed navigation
     navigation.navigate(mainNavigations.Feed, {
-      screen: feedNavigations.FEED_DETAIL,
-      params: {id: post.id},
-      initial: false,
+      screen: feedTabNavigations.FEED_HOME,
+      params: {
+        screen: feedNavigations.FEED_DETAIL,
+        params: {
+          id: post.id,
+        },
+        initial: false,
+      },
     });
   };
 

@@ -21,3 +21,8 @@ export const feedNavigations = {
   EDIT_POST: 'EditPost',
   IMAGE_ZOOM: 'ImageZoom',
 } as const;
+
+export const feedTabNavigations = {
+  FEED_HOME: 'FeedTabHome',
+  FEED_FAVORITE: 'FeedFavorite',
+} as const;
