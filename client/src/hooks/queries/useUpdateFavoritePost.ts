@@ -4,7 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import {postQueryKey} from './useGetPost';
 
 export const useUpdateFavoritePost = (
-  mutationOptions: UseMutationCustomOptions,
+  mutationOptions?: UseMutationCustomOptions,
 ) => {
   return useMutation({
     mutationFn: updateFavoritePost,

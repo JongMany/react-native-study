@@ -19,7 +19,7 @@ import {
   mainNavigations,
   mapNavigations,
 } from '@/constants';
-import {useGetPost, useModal} from '@/hooks';
+import {useGetPost, useModal, useUpdateFavoritePost} from '@/hooks';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {getDateLocaleFormat} from '@/utils';
@@ -53,6 +53,7 @@ export default function FeedDetailScreen({
   const {setMoveLocation} = useLocationStore();
   const {isVisible, hide, show} = useModal();
   const {setDetailPost} = useDetailPostStore();
+  const favoritePost = useUpdateFavoritePost();
 
   useEffect(() => {
     post && setDetailPost(post);
@@ -71,6 +72,10 @@ export default function FeedDetailScreen({
     navigation.navigate(mainNavigations.HOME, {
       screen: mapNavigations.MAP_HOME,
     });
+  };
+
+  const handlePressFavorite = () => {
+    favoritePost.mutate(post.id);
   };
 
   return (
@@ -170,8 +175,13 @@ export default function FeedDetailScreen({
             style={({pressed}) => [
               pressed && styles.bookmarkPressedContainer,
               styles.bookmarkContainer,
-            ]}>
-            <Octicons name="star-fill" size={30} color={colors.GRAY_100} />
+            ]}
+            onPress={handlePressFavorite}>
+            <Octicons
+              name="star-fill"
+              size={30}
+              color={post.isFavorite ? colors.YELLOW_500 : colors.GRAY_100}
+            />
           </Pressable>
           <CustomButton
             label="위치보기"
