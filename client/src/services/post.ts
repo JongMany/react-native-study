@@ -82,7 +82,7 @@ export type GetSearchPostResponseDto = CreatePostResponseDto[];
 export const getSearchPosts = async ({
   page = 1,
   query,
-}: GetSearchPostRequestDto): Promise<GetSearchPostResponseDto[]> => {
+}: GetSearchPostRequestDto): Promise<GetSearchPostResponseDto> => {
   const {data} = await axiosInstance.get(
     `/posts/my/search?query=${query}&page=${page}`,
   );

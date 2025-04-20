@@ -29,7 +29,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import useLocationStore from '@/store/useLocationStore';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {DrawerScreenProps} from '@react-navigation/drawer';
-import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import {MainDrawerParamList} from '@/navigations/drawer/MainDrawerNavigator';
 import FeedDetailOption from '@/components/feed/FeedDetailOption';
 import useDetailPostStore from '@/store/useDetailPostStore';
 

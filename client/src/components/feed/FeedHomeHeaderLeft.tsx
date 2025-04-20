@@ -6,7 +6,7 @@ import {CompositeNavigationProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {FeedStackParamList} from '@/navigations/stack/FeedStackNavigator';
-import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import {MainDrawerParamList} from '@/navigations/drawer/MainDrawerNavigator';
 
 interface FeedHomeHeaderLeftProps
   extends CompositeNavigationProp<

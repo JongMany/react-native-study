@@ -23,7 +23,7 @@ import {getDateWithSeparator} from '@/utils';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import {MainDrawerParamList} from '@/navigations/drawer/MainDrawerNavigator';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {FeedTabParamList} from '@/navigations/tab/FeedTabNavigator';
 

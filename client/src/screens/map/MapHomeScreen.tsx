@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {alerts, colors, mapNavigations, numbers} from '@/constants';
-import {MainDrawerParamList} from '@/navigations/drawer/MainDrawereNavigator';
+import {MainDrawerParamList} from '@/navigations/drawer/MainDrawerNavigator';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';

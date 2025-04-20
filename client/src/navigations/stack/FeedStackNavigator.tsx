@@ -8,7 +8,7 @@ import {colors, feedNavigations} from '@/constants';
 import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
 import {CompositeNavigationProp} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {MainDrawerParamList} from '../drawer/MainDrawereNavigator';
+import {MainDrawerParamList} from '../drawer/MainDrawerNavigator';
 import FeedDetailScreen from '@/screens/feed/FeedDetailScreen';
 import {LatLng} from 'react-native-maps';
 import EditPostScreen from '@/screens/feed/EditPostScreen';

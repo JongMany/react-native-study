@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeedHomeHeaderLeft from '@/components/feed/FeedHomeHeaderLeft';
+import FeedSearchScreen from '@/screens/feed/FeedSearchScreen';
 
 export type FeedTabParamList = {
   [feedTabNavigations.FEED_HOME]: {
@@ -18,8 +19,8 @@ export type FeedTabParamList = {
     };
     initial: boolean;
   };
-
   [feedTabNavigations.FEED_FAVORITE]: undefined;
+  [feedTabNavigations.FEED_SEARCH]: undefined;
 };
 
 const Tab = createBottomTabNavigator<FeedTabParamList>();
@@ -34,6 +35,10 @@ function TabBarIcons(route: RouteProp<FeedTabParamList>, focused: boolean) {
     case feedTabNavigations.FEED_FAVORITE:
       iconName = focused ? 'star' : 'star-outline';
       break;
+    case feedTabNavigations.FEED_SEARCH: {
+      iconName = 'search';
+      break;
+    }
   }
 
   return (
@@ -73,7 +78,9 @@ function FeedTabNavigator() {
           headerShown: false,
           tabBarStyle: (tabRoute => {
             // 특정 경로에서는 바텀탭이 안보이도록
-            const routeName = getFocusedRouteNameFromRoute(tabRoute);
+            const routeName =
+              getFocusedRouteNameFromRoute(tabRoute) ??
+              feedNavigations.FEED_HOME;
 
             if (
               routeName === feedNavigations.FEED_DETAIL ||
@@ -95,6 +102,15 @@ function FeedTabNavigator() {
         component={FeedFavoriteScreen}
         options={({navigation}) => ({
           headerTitle: '즐겨찾기',
+          headerLeft: () => FeedHomeHeaderLeft(navigation as any),
+        })}
+      />
+      <Tab.Screen
+        name={feedTabNavigations.FEED_SEARCH}
+        component={FeedSearchScreen}
+        options={({navigation}) => ({
+          headerTitle: '검색',
+          headerShown: false,
           headerLeft: () => FeedHomeHeaderLeft(navigation as any),
         })}
       />

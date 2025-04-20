@@ -1,12 +1,13 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
-import {colors} from '@/constants';
-import FeedFavoriteList from '@/components/feed/FeedFavoriteList';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
-export default function FeedFavoriteScreen() {
+import {colors} from '@/constants';
+import FeedSearchList from '@/components/feed/FeedSearchList';
+
+function FeedSearchScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <FeedFavoriteList />
+      <FeedSearchList />
     </SafeAreaView>
   );
 }
@@ -17,3 +18,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
   },
 });
+
+export default FeedSearchScreen;

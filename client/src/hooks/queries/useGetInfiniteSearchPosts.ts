@@ -13,10 +13,10 @@ import {postQueryKey} from './useGetPost';
 function useGetInfiniteSearchPosts(
   query: string,
   queryOptions?: UseInfiniteQueryOptions<
-    GetSearchPostResponseDto[],
+    GetSearchPostResponseDto,
     ErrorResponse,
-    InfiniteData<GetSearchPostResponseDto[], number>,
-    GetSearchPostResponseDto[],
+    InfiniteData<GetSearchPostResponseDto, number>,
+    GetSearchPostResponseDto,
     QueryKey,
     number
   >,
