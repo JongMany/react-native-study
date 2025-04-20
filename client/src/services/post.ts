@@ -76,3 +76,16 @@ export const updateFavoritePost = async (
 
   return data;
 };
+
+export type GetSearchPostRequestDto = {page: number; query: string};
+export type GetSearchPostResponseDto = CreatePostResponseDto[];
+export const getSearchPosts = async ({
+  page = 1,
+  query,
+}: GetSearchPostRequestDto): Promise<GetSearchPostResponseDto[]> => {
+  const {data} = await axiosInstance.get(
+    `/posts/my/search?query=${query}&page=${page}`,
+  );
+
+  return data;
+};

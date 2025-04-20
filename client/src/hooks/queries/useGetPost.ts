@@ -8,6 +8,7 @@ export const postQueryKey = {
   getByPostId: (id: number) => [...postQueryKey.getPost(), id] as const,
   getPosts: () => [...postQueryKey.all, 'getPosts'] as const,
   getFavoritePosts: () => [...postQueryKey.all, 'getFavoritePosts'],
+  getSearchPosts: (query: string) => [...postQueryKey.all, 'searchPost', query],
 } as const;
 
 export const useGetPost = (
