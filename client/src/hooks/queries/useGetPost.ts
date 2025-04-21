@@ -9,6 +9,11 @@ export const postQueryKey = {
   getPosts: () => [...postQueryKey.all, 'getPosts'] as const,
   getFavoritePosts: () => [...postQueryKey.all, 'getFavoritePosts'],
   getSearchPosts: (query: string) => [...postQueryKey.all, 'searchPost', query],
+  getCalendarPosts: (year: number, month: number) => [
+    ...postQueryKey.all,
+    'getCalendarPosts',
+    `${year}-${month}`,
+  ],
 } as const;
 
 export const useGetPost = (

@@ -9,3 +9,4 @@ export * from './useDeletePost';
 export * from './useUpdatePost';
 export * from './useUpdateFavoritePost';
 export * from './useGetInfiniteFavoritePosts';
+export * from './useGetCalendarPosts';

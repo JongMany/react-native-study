@@ -1,4 +1,4 @@
-import {ImageUri, Post} from '@/models';
+import {CalendarPost, ImageUri, Post} from '@/models';
 import {axiosInstance} from './axios-instance';
 
 export type CreatePostRequestDto = Omit<Post, 'id'> & {
@@ -87,5 +87,15 @@ export const getSearchPosts = async ({
     `/posts/my/search?query=${query}&page=${page}`,
   );
 
+  return data;
+};
+
+export type GetCalendarPostsRequestDto = {year: number; month: number};
+export type GetCalendarPostsResponseDto = Record<number, CalendarPost[]>; // number = day
+export const getCalendarPosts = async ({
+  year,
+  month,
+}: GetCalendarPostsRequestDto): Promise<GetCalendarPostsResponseDto> => {
+  const {data} = await axiosInstance.get(`/posts?year=${year}&month=${month}`);
   return data;
 };

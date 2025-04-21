@@ -24,6 +24,12 @@ export interface Post extends Marker {
   description: string;
 }
 
+export type CalendarPost = {
+  id: number;
+  title: string;
+  address: string;
+};
+
 export interface Profile {
   id: number;
   email: string;
