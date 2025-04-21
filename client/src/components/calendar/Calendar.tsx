@@ -1,4 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -6,14 +6,22 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '@/constants';
 import DayOfWeeks from './DayOfWeeks';
 import {MonthYear} from '@/utils';
+import DateBox from './DateBox';
 
 interface CalendarProps {
   monthYear: MonthYear;
   onChangeMonth: (increment: number) => void;
+  selectedDate: number;
+  onPressDate: (date: number) => void;
 }
 
-export default function Calendar({monthYear, onChangeMonth}: CalendarProps) {
-  const {month, year} = monthYear;
+export default function Calendar({
+  monthYear,
+  onChangeMonth,
+  selectedDate,
+  onPressDate,
+}: CalendarProps) {
+  const {month, year, lastDate, firstDayOfWeek} = monthYear;
   return (
     <>
       {/* 헤더 */}
@@ -41,6 +49,24 @@ export default function Calendar({monthYear, onChangeMonth}: CalendarProps) {
       </View>
       {/* 요일 표시 */}
       <DayOfWeeks />
+      {/* 날짜 표시 */}
+      <View style={styles.bodyContainer}>
+        <FlatList
+          data={Array.from({length: lastDate + firstDayOfWeek}, (_, idx) => ({
+            id: idx,
+            date: idx - firstDayOfWeek + 1,
+          }))}
+          renderItem={({item}) => (
+            <DateBox
+              date={item.date}
+              selectedDate={selectedDate}
+              onPressDate={onPressDate}
+            />
+          )}
+          keyExtractor={item => String(item.id)}
+          numColumns={7}
+        />
+      </View>
     </>
   );
 }
@@ -65,5 +91,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     color: colors.BLACK,
+  },
+  bodyContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.GRAY_300,
+    backgroundColor: colors.GRAY_100,
   },
 });
