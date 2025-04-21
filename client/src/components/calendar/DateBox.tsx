@@ -6,9 +6,15 @@ interface DateBoxProps {
   date: number;
   selectedDate: number;
   onPressDate: (date: number) => void;
+  isToday?: boolean;
 }
 
-function DateBox({date, selectedDate, onPressDate}: DateBoxProps) {
+function DateBox({
+  date,
+  selectedDate,
+  onPressDate,
+  isToday = false,
+}: DateBoxProps) {
   return (
     <Pressable style={styles.container} onPress={() => onPressDate(date)}>
       {date > 0 && (
@@ -16,12 +22,15 @@ function DateBox({date, selectedDate, onPressDate}: DateBoxProps) {
           style={[
             styles.dateContainer,
             selectedDate === date && styles.selectedContainer,
+            selectedDate === date && isToday && styles.selectedTodayContainer,
           ]}>
           <Text
             style={[
               styles.dateText &&
                 selectedDate === date &&
                 styles.selectedDateText,
+              isToday && styles.todayDateText,
+              selectedDate === date && isToday && styles.selectedTodayText,
             ]}>
             {date}
           </Text>
@@ -51,6 +60,9 @@ const styles = StyleSheet.create({
   selectedContainer: {
     backgroundColor: colors.BLACK,
   },
+  selectedTodayContainer: {
+    backgroundColor: colors.PINK_700,
+  },
   dateText: {
     fontSize: 17,
     color: colors.BLACK,
@@ -58,6 +70,13 @@ const styles = StyleSheet.create({
   selectedDateText: {
     color: colors.WHITE,
     fontWeight: 'bold',
+  },
+  todayDateText: {
+    color: colors.PINK_700,
+    fontWeight: '700',
+  },
+  selectedTodayText: {
+    color: colors.WHITE,
   },
 });
 

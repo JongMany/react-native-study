@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {colors} from '@/constants';
 import DayOfWeeks from './DayOfWeeks';
-import {MonthYear} from '@/utils';
+import {isSameAsCurrentDate, MonthYear} from '@/utils';
 import DateBox from './DateBox';
 
 interface CalendarProps {
@@ -61,6 +61,7 @@ export default function Calendar({
               date={item.date}
               selectedDate={selectedDate}
               onPressDate={onPressDate}
+              isToday={isSameAsCurrentDate(year, month, item.date)}
             />
           )}
           keyExtractor={item => String(item.id)}
