@@ -31,7 +31,7 @@ export type MonthYear = {
 
 export const getMonthYearDetails = (initialDate: Date): MonthYear => {
   const year = initialDate.getFullYear();
-  const month = initialDate.getMonth();
+  const month = initialDate.getMonth() + 1;
   const startDate = new Date(`${year}-${month}`);
   const firstDayOfWeek = startDate.getDay(); // 매월 1일이 무슨 요일인지 파악
   const lastDateString = String(
