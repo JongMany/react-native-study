@@ -7,12 +7,15 @@ import {colors} from '@/constants';
 import DayOfWeeks from './DayOfWeeks';
 import {isSameAsCurrentDate, MonthYear} from '@/utils';
 import DateBox from './DateBox';
+import {GetCalendarPostsResponseDto} from '@/services';
 
+type Schedule = GetCalendarPostsResponseDto;
 interface CalendarProps {
   monthYear: MonthYear;
   onChangeMonth: (increment: number) => void;
   selectedDate: number;
   onPressDate: (date: number) => void;
+  schedules: Schedule;
 }
 
 export default function Calendar({
@@ -20,6 +23,7 @@ export default function Calendar({
   onChangeMonth,
   selectedDate,
   onPressDate,
+  schedules,
 }: CalendarProps) {
   const {month, year, lastDate, firstDayOfWeek} = monthYear;
   return (
@@ -62,6 +66,7 @@ export default function Calendar({
               selectedDate={selectedDate}
               onPressDate={onPressDate}
               isToday={isSameAsCurrentDate(year, month, item.date)}
+              hasSchedule={Boolean(schedules[item.date])}
             />
           )}
           keyExtractor={item => String(item.id)}

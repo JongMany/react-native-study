@@ -7,6 +7,7 @@ interface DateBoxProps {
   selectedDate: number;
   onPressDate: (date: number) => void;
   isToday?: boolean;
+  hasSchedule?: boolean;
 }
 
 function DateBox({
@@ -14,27 +15,31 @@ function DateBox({
   selectedDate,
   onPressDate,
   isToday = false,
+  hasSchedule = false,
 }: DateBoxProps) {
   return (
     <Pressable style={styles.container} onPress={() => onPressDate(date)}>
       {date > 0 && (
-        <View
-          style={[
-            styles.dateContainer,
-            selectedDate === date && styles.selectedContainer,
-            selectedDate === date && isToday && styles.selectedTodayContainer,
-          ]}>
-          <Text
+        <>
+          <View
             style={[
-              styles.dateText &&
-                selectedDate === date &&
-                styles.selectedDateText,
-              isToday && styles.todayDateText,
-              selectedDate === date && isToday && styles.selectedTodayText,
+              styles.dateContainer,
+              selectedDate === date && styles.selectedContainer,
+              selectedDate === date && isToday && styles.selectedTodayContainer,
             ]}>
-            {date}
-          </Text>
-        </View>
+            <Text
+              style={[
+                styles.dateText &&
+                  selectedDate === date &&
+                  styles.selectedDateText,
+                isToday && styles.todayDateText,
+                selectedDate === date && isToday && styles.selectedTodayText,
+              ]}>
+              {date}
+            </Text>
+          </View>
+          {hasSchedule && <View style={styles.scheduleIndicator} />}
+        </>
       )}
     </Pressable>
   );
@@ -77,6 +82,13 @@ const styles = StyleSheet.create({
   },
   selectedTodayText: {
     color: colors.WHITE,
+  },
+  scheduleIndicator: {
+    marginTop: 2,
+    width: 6,
+    height: 6,
+    borderRadius: 6,
+    backgroundColor: colors.GRAY_500,
   },
 });
 
