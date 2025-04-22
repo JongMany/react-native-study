@@ -58,7 +58,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
 
   const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
 
-  const hanldePressAddPost = () => {
+  const handlePressAddPost = () => {
     if (!selectLocation) {
       return Alert.alert(
         alerts.NOT_SELECTED_LOCATION.TITLE,
@@ -69,6 +69,10 @@ function MapHomeScreen({}: MapHomeScreenProps) {
       location: selectLocation,
     });
     setSelectLocation(null);
+  };
+
+  const handlePressSearchLocation = () => {
+    navigation.navigate(mapNavigations.SEARCH_LOCATION);
   };
 
   const {isVisible, show, hide} = useModal();
@@ -138,8 +142,11 @@ function MapHomeScreen({}: MapHomeScreenProps) {
         <Ionicons name="menu" color={colors.WHITE} size={25} />
       </Pressable>
       <View style={styles.buttonList} pointerEvents="box-none">
-        <Pressable style={styles.mapButton} onPress={hanldePressAddPost}>
+        <Pressable style={styles.mapButton} onPress={handlePressAddPost}>
           <MaterialIcons name="add" color={colors.WHITE} size={25} />
+        </Pressable>
+        <Pressable style={styles.mapButton} onPress={handlePressSearchLocation}>
+          <Ionicons name="search" color={colors.WHITE} size={25} />
         </Pressable>
         <Pressable
           style={styles.mapButton}
