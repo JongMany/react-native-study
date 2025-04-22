@@ -7,24 +7,22 @@ import {colors} from '@/constants';
 import DayOfWeeks from './DayOfWeeks';
 import {isSameAsCurrentDate, MonthYear} from '@/utils';
 import DateBox from './DateBox';
-import {GetCalendarPostsResponseDto} from '@/services';
 
-type Schedule = GetCalendarPostsResponseDto;
-interface CalendarProps {
+interface CalendarProps<T> {
   monthYear: MonthYear;
   onChangeMonth: (increment: number) => void;
   selectedDate: number;
   onPressDate: (date: number) => void;
-  schedules: Schedule;
+  schedules: Record<number, T>; // number는 숫자
 }
 
-export default function Calendar({
+export default function Calendar<T>({
   monthYear,
   onChangeMonth,
   selectedDate,
   onPressDate,
   schedules,
-}: CalendarProps) {
+}: CalendarProps<T>) {
   const {month, year, lastDate, firstDayOfWeek} = monthYear;
   return (
     <>

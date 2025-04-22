@@ -4,6 +4,7 @@ import {colors} from '@/constants';
 import Calendar from '@/components/calendar/Calendar';
 import {getMonthYearDetails, getNewMonthYear} from '@/utils';
 import {useGetCalendarPosts} from '@/hooks';
+import EventList from '@/components/calendar/EventList';
 
 export default function CalendarHomeScreen() {
   const currentMonthYear = getMonthYearDetails(new Date());
@@ -38,6 +39,7 @@ export default function CalendarHomeScreen() {
         onPressDate={handlePressDate}
         schedules={posts}
       />
+      <EventList posts={posts[selectedDate] ?? []} />
     </SafeAreaView>
   );
 }
