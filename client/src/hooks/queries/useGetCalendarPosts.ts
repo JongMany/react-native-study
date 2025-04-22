@@ -1,5 +1,5 @@
 import {getCalendarPosts, GetCalendarPostsResponseDto} from '@/services';
-import {useQuery} from '@tanstack/react-query';
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import {postQueryKey} from './useGetPost';
 import {UseQueryCustomOptions} from '@/models';
 
@@ -10,6 +10,7 @@ export const useGetCalendarPosts = (
   return useQuery({
     queryKey: postQueryKey.getCalendarPostsByYearMonth(year, month),
     queryFn: async () => await getCalendarPosts({year, month}),
+    placeholderData: keepPreviousData,
     ...queryOptions,
   });
 };
