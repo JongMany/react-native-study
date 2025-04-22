@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {ImageUri} from '@/models';
 import {Alert} from 'react-native';
 import {alerts} from '@/constants';
+import Toast from 'react-native-toast-message';
 
 interface UseImagePickerProps {
   initialImages: ImageUri[];
@@ -55,6 +56,12 @@ export function useImagePicker({initialImages = []}: UseImagePickerProps) {
       })
       .catch(error => {
         if (error.code !== 'E_PICKER_CANCELLED') {
+          Toast.show({
+            type: 'error',
+            text1: '갤러리를 열 수 없어요.',
+            text2: '권한을 허용했는지 확인해주세요.',
+            position: 'bottom',
+          });
           // 사용자가 이미지를 선택하지 않고 취소한 경우가 아닌 경우 => 스냅바 표시
         }
       });

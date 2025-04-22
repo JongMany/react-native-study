@@ -32,4 +32,5 @@ export const alerts: Alerts = {
 
 export const errorMessages = {
   CANNOT_GET_ADDRESS: '주소를 찾는데 실패했습니다.',
+  UNEXPECT_ERROR: '알 수 없는 에러가 발생했습니다.',
 };

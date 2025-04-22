@@ -5,6 +5,8 @@ import {useForm} from '@/hooks';
 import {SignupInformation, validateSignUp} from '@/utils';
 import CustomButton from '@/components/common/CustomButton';
 import useAuth from '@/hooks/queries/useAuth';
+import Toast from 'react-native-toast-message';
+import {errorMessages} from '@/constants';
 
 export default function SignupScreen() {
   const passwordRef = useRef<TextInput | null>(null);
@@ -31,14 +33,23 @@ export default function SignupScreen() {
       onSuccess: () => {
         loginMutation.mutate(requestDto, {
           onError: error => {
-            // TO-DO) Error 처리
-            console.log(error.response?.data);
+            Toast.show({
+              type: 'error',
+              text1:
+                error.response?.data.message || errorMessages.UNEXPECT_ERROR,
+              position: 'bottom',
+              visibilityTime: 2000,
+            });
           },
         });
       },
       onError: error => {
-        // TO-DO) Error 처리
-        console.log(error.response?.data);
+        Toast.show({
+          type: 'error',
+          text1: error.response?.data.message || errorMessages.UNEXPECT_ERROR,
+          position: 'bottom',
+          visibilityTime: 2000,
+        });
       },
     });
   };
