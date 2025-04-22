@@ -14,6 +14,13 @@ export const useUpdatePost = (mutationOptions?: UseMutationCustomOptions) => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
       });
+      const postDate = new Date(newPost.date);
+      queryClient.invalidateQueries({
+        queryKey: postQueryKey.getCalendarPostsByYearMonth(
+          postDate.getFullYear(),
+          postDate.getMonth() + 1,
+        ),
+      });
       queryClient.setQueryData(postQueryKey.getByPostId(newPost.id), newPost);
     },
     ...mutationOptions,

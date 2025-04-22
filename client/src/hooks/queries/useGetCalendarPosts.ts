@@ -8,7 +8,7 @@ export const useGetCalendarPosts = (
   queryOptions?: UseQueryCustomOptions<GetCalendarPostsResponseDto>,
 ) => {
   return useQuery({
-    queryKey: postQueryKey.getCalendarPosts(year, month),
+    queryKey: postQueryKey.getCalendarPostsByYearMonth(year, month),
     queryFn: async () => await getCalendarPosts({year, month}),
     ...queryOptions,
   });

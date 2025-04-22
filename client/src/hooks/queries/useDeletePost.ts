@@ -14,6 +14,9 @@ export const useDeletePost = (mutationOptions?: UseMutationCustomOptions) => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
       });
+      queryClient.invalidateQueries({
+        queryKey: postQueryKey.getCalendarPosts(),
+      });
     },
     ...mutationOptions,
   });

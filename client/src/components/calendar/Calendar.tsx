@@ -1,5 +1,5 @@
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -9,6 +9,8 @@ import {isSameAsCurrentDate, MonthYear} from '@/utils';
 import DateBox from './DateBox';
 import YearSelector from './YearSelector';
 import {useModal} from '@/hooks';
+import {useNavigation} from '@react-navigation/native';
+import CalendarHomeHeaderRight from './CalendarHomeHeaderRight';
 
 interface CalendarProps<T> {
   monthYear: MonthYear;
@@ -16,6 +18,7 @@ interface CalendarProps<T> {
   selectedDate: number;
   onPressDate: (date: number) => void;
   schedules: Record<number, T>; // number는 숫자
+  moveToToToday: () => void;
 }
 
 export default function Calendar<T>({
@@ -24,6 +27,7 @@ export default function Calendar<T>({
   selectedDate,
   onPressDate,
   schedules,
+  moveToToToday,
 }: CalendarProps<T>) {
   const {month, year, lastDate, firstDayOfWeek} = monthYear;
   const yearSelector = useModal();
@@ -31,6 +35,13 @@ export default function Calendar<T>({
     onChangeMonth((selectedYear - year) * 12);
     yearSelector.hide();
   };
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => CalendarHomeHeaderRight({onPress: moveToToToday}),
+    });
+  }, [moveToToToday, navigation]);
 
   return (
     <>

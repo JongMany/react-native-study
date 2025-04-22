@@ -17,12 +17,19 @@ export const useCreatePost = (
 ) => {
   return useMutation({
     mutationFn: createPost,
-    onSuccess: () => {
+    onSuccess: newPost => {
       queryClient.invalidateQueries({
         queryKey: markerQueryKey.getMarkers(),
       });
       queryClient.invalidateQueries({
         queryKey: postQueryKey.getPosts(),
+      });
+      const postDate = new Date(newPost.date);
+      queryClient.invalidateQueries({
+        queryKey: postQueryKey.getCalendarPostsByYearMonth(
+          postDate.getFullYear(),
+          postDate.getMonth() + 1,
+        ),
       });
 
       // setQueryData
