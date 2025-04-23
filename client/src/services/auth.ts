@@ -41,6 +41,15 @@ export const postLogin = async ({
   return data;
 };
 
+export type KakaoLoginRequestDto = string;
+export type KakaoLoginResponseDto = LoginResponseDto;
+export const kakaoLogin = async (
+  token: KakaoLoginRequestDto,
+): Promise<KakaoLoginResponseDto> => {
+  const {data} = await axiosInstance.post('/auth/oauth/kakao', {token});
+  return data;
+};
+
 export type ProfileResponseDto = Profile & Category;
 export const getProfile = async (): Promise<ProfileResponseDto> => {
   const {data} = await axiosInstance.get('/auth/me');

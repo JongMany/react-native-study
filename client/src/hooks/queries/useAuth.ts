@@ -1,7 +1,10 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {MutationFunction, useMutation, useQuery} from '@tanstack/react-query';
 import {
   getAccesssToken,
   getProfile,
+  kakaoLogin,
+  KakaoLoginRequestDto,
+  KakaoLoginResponseDto,
   LoginRequestDto,
   LoginResponseDto,
   logout,
@@ -36,11 +39,12 @@ export const useSignup = (
   });
 };
 
-export const useLogin = (
-  mutationOptions?: UseMutationCustomOptions<LoginResponseDto, LoginRequestDto>,
+export const useLogin = <T>(
+  loginAPI: MutationFunction<LoginResponseDto, T>,
+  mutationOptions?: UseMutationCustomOptions<LoginResponseDto, T>,
 ) => {
   return useMutation({
-    mutationFn: postLogin,
+    mutationFn: loginAPI,
     ...mutationOptions,
     onSuccess(data) {
       const {accessToken, refreshToken} = data;
@@ -56,6 +60,21 @@ export const useLogin = (
       });
     },
   });
+};
+
+export const useEmailLogin = (
+  mutationOptions?: UseMutationCustomOptions<LoginResponseDto, LoginRequestDto>,
+) => {
+  return useLogin(postLogin, mutationOptions);
+};
+
+export const useKakaoLogin = (
+  mutationOptions?: UseMutationCustomOptions<
+    KakaoLoginResponseDto,
+    KakaoLoginRequestDto
+  >,
+) => {
+  return useLogin(kakaoLogin, mutationOptions);
 };
 
 export const useRefreshAccessToken = () => {
@@ -117,7 +136,8 @@ export const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
 
 const useAuth = () => {
   const signupMutation = useSignup();
-  const loginMutation = useLogin();
+  const loginMutation = useEmailLogin();
+  const kakaoLoginMutation = useKakaoLogin();
   const logoutMutation = useLogout();
   const refreshAccessToken = useRefreshAccessToken();
   const getProfileQuery = useGetProfile({
@@ -129,6 +149,7 @@ const useAuth = () => {
     isLogin,
     signupMutation,
     loginMutation,
+    kakaoLoginMutation,
     getProfileQuery,
     logoutMutation,
   };
