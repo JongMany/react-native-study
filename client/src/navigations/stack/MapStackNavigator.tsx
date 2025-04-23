@@ -50,6 +50,7 @@ function MapStackNavigator() {
         name={mapNavigations.SEARCH_LOCATION}
         component={SearchLocationScreen}
         options={{
+          presentation: 'modal',
           headerTitle: '장소 검색',
         }}
       />
