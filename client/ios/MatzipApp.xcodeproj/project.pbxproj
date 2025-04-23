@@ -14,11 +14,11 @@
 		1A937F672DAB706F0024912A /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F662DAB706F0024912A /* Ionicons.ttf */; };
 		1A937F692DAB70740024912A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F682DAB70740024912A /* MaterialIcons.ttf */; };
 		1A937F6B2DAB70790024912A /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F6A2DAB70790024912A /* Octicons.ttf */; };
+		469D1BD0F0D944719B0C6261 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EB9775E5721E4CBC902000FC /* Config.xcconfig */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		83DDFEECC3EA43DAA5C9DA55 /* libPods-MatzipApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */; };
 		DFAD9B3F0C9C5AE149D07092 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		469D1BD0F0D944719B0C6261 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EB9775E5721E4CBC902000FC /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +34,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MatzipApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatzipApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBE93E12819EAE940CBBC51 /* Pods-MatzipApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatzipApp.debug.xcconfig"; path = "Target Support Files/Pods-MatzipApp/Pods-MatzipApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EB9775E5721E4CBC902000FC /* Config.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EB9775E5721E4CBC902000FC /* Config.xcconfig */ = {isa = PBXFileReference; name = "Config.xcconfig"; path = "Config.xcconfig"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.xcconfig; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +339,7 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -416,10 +417,10 @@
 				USE_HERMES = true;
 			};
 			name = Debug;
-			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -489,7 +490,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-			baseConfigurationReference = EB9775E5721E4CBC902000FC /* Config.xcconfig */;
 		};
 /* End XCBuildConfiguration section */
 
