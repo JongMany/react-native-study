@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useEffect, useState} from 'react';
 import Config from 'react-native-config';
 import {LatLng} from 'react-native-maps';
+import {useDebounce} from './useDebounce';
 
 type Meta = {
   total_count: number;
@@ -38,12 +39,14 @@ export function useSearchLocation(keyword: string, location: LatLng) {
   const [regionInfo, setRegionInfo] = useState<RegionInfo[]>([]);
   const [pageParam, setPageParam] = useState(1);
 
+  const debouncedSearchText = useDebounce(keyword, 300);
+
   useEffect(() => {
     console.log(keyword);
     (async () => {
       try {
         const {data} = await axios.get<RegionResponse>(
-          `https://dapi.kakao.com/v2/local/search/keyword.json?query=${keyword}&y=${location.latitude}&x=${location.longitude}&page=${pageParam}`,
+          `https://dapi.kakao.com/v2/local/search/keyword.json?query=${debouncedSearchText}&y=${location.latitude}&x=${location.longitude}&page=${pageParam}`,
           {
             headers: {
               Authorization: `KakaoAK ${Config.KAKAO_REST_API_KEY}`,
@@ -57,7 +60,9 @@ export function useSearchLocation(keyword: string, location: LatLng) {
         console.dir(error);
       }
     })();
-  }, [keyword, location, pageParam]);
+
+    debouncedSearchText === '' && setPageParam(1);
+  }, [debouncedSearchText, location, pageParam]);
 
   return {regionInfo};
 }
