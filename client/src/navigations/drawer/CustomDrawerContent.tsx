@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     alignItems: 'flex-end',
-    padding: 10,
+    padding: 14,
   },
 });
