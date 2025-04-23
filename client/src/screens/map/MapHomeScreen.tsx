@@ -27,6 +27,7 @@ import mapStyle from '@/styles/mapStyle';
 import CustomMarker from '@/components/common/CustomMarker';
 import MarkerModal from '@/components/map/MarkerModal';
 import Toast from 'react-native-toast-message';
+import useLocationStore from '@/store/useLocationStore';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
@@ -56,7 +57,7 @@ function MapHomeScreen({}: MapHomeScreenProps) {
     moveMapView(userLocation);
   };
 
-  const [selectLocation, setSelectLocation] = useState<LatLng | null>(null);
+  const {selectLocation, setSelectLocation} = useLocationStore();
 
   const handlePressAddPost = () => {
     if (!selectLocation) {

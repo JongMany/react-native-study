@@ -42,7 +42,6 @@ export function useSearchLocation(keyword: string, location: LatLng) {
   const debouncedSearchText = useDebounce(keyword, 300);
 
   useEffect(() => {
-    console.log(keyword);
     (async () => {
       try {
         const {data} = await axios.get<RegionResponse>(
@@ -53,11 +52,9 @@ export function useSearchLocation(keyword: string, location: LatLng) {
             },
           },
         );
-        console.log('data', data);
         setRegionInfo(data.documents);
       } catch (error) {
         setRegionInfo([]);
-        console.dir(error);
       }
     })();
 
