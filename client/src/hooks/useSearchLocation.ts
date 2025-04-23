@@ -38,6 +38,15 @@ type RegionResponse = {
 export function useSearchLocation(keyword: string, location: LatLng) {
   const [regionInfo, setRegionInfo] = useState<RegionInfo[]>([]);
   const [pageParam, setPageParam] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
+
+  const fetchNextPage = () => {
+    setPageParam(prev => prev + 1);
+  };
+
+  const fetchPrevPage = () => {
+    setPageParam(prev => prev - 1);
+  };
 
   const debouncedSearchText = useDebounce(keyword, 300);
 
@@ -52,14 +61,17 @@ export function useSearchLocation(keyword: string, location: LatLng) {
             },
           },
         );
+        setHasNextPage(!data.meta.is_end);
         setRegionInfo(data.documents);
       } catch (error) {
         setRegionInfo([]);
       }
     })();
 
+    keyword === '' && setPageParam(1);
+
     debouncedSearchText === '' && setPageParam(1);
   }, [debouncedSearchText, location, pageParam]);
 
-  return {regionInfo};
+  return {regionInfo, pageParam, fetchNextPage, fetchPrevPage, hasNextPage};
 }
