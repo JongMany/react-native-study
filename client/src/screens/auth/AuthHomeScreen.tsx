@@ -91,8 +91,9 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 30,
     alignItems: 'center',
+    marginHorizontal: 30,
+    marginVertical: 30,
   },
   imageContainer: {
     flex: 1.5,
@@ -104,14 +105,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    rowGap: 10,
     alignItems: 'center',
+    gap: 10,
   },
   kakaoButtonContainer: {
-    backgroundColor: '#fee503',
+    backgroundColor: '#FEE503',
   },
   kakaoButtonText: {
-    color: '#161600',
+    color: '#181600',
   },
   emailText: {
     textDecorationLine: 'underline',
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
   appleButton: {
     width: Dimensions.get('screen').width - 60,
     height: 45,
-    paddingVertical: 25,
   },
 });
 export default AuthHomeScreen;
