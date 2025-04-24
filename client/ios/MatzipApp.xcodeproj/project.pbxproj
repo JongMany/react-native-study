@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		1A8467EB2DA8874800FDD933 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		1A8467ED2DA8875100FDD933 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		1A8467EF2DA8876400FDD933 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		1A8467EB2DA8874800FDD933 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		1A8467ED2DA8875100FDD933 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		1A8467EF2DA8876400FDD933 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		1A937F672DAB706F0024912A /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F662DAB706F0024912A /* Ionicons.ttf */; };
 		1A937F692DAB70740024912A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F682DAB70740024912A /* MaterialIcons.ttf */; };
 		1A937F6B2DAB70790024912A /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A937F6A2DAB70790024912A /* Octicons.ttf */; };
@@ -29,12 +29,13 @@
 		1A937F662DAB706F0024912A /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
 		1A937F682DAB70740024912A /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		1A937F6A2DAB70790024912A /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
+		1AC9915D2DBAF65E00959B5B /* MatzipApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MatzipApp.entitlements; path = MatzipApp/MatzipApp.entitlements; sourceTree = "<group>"; };
 		1FAE2214CE550DAFD912B2AD /* Pods-MatzipApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatzipApp.release.xcconfig"; path = "Target Support Files/Pods-MatzipApp/Pods-MatzipApp.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MatzipApp/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MatzipApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A389D78F2318D797EF2782B0 /* libPods-MatzipApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MatzipApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBE93E12819EAE940CBBC51 /* Pods-MatzipApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatzipApp.debug.xcconfig"; path = "Target Support Files/Pods-MatzipApp/Pods-MatzipApp.debug.xcconfig"; sourceTree = "<group>"; };
-		EB9775E5721E4CBC902000FC /* Config.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		EB9775E5721E4CBC902000FC /* Config.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -53,6 +54,7 @@
 		13B07FAE1A68108700A75B9A /* MatzipApp */ = {
 			isa = PBXGroup;
 			children = (
+				1AC9915D2DBAF65E00959B5B /* MatzipApp.entitlements */,
 				1A8467E92DA886F200FDD933 /* Fonts */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
@@ -186,10 +188,10 @@
 				1A937F6B2DAB70790024912A /* Octicons.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1A8467ED2DA8875100FDD933 /* BuildFile in Resources */,
+				1A8467ED2DA8875100FDD933 /* (null) in Resources */,
 				1A937F672DAB706F0024912A /* Ionicons.ttf in Resources */,
-				1A8467EB2DA8874800FDD933 /* BuildFile in Resources */,
-				1A8467EF2DA8876400FDD933 /* BuildFile in Resources */,
+				1A8467EB2DA8874800FDD933 /* (null) in Resources */,
+				1A8467EF2DA8876400FDD933 /* (null) in Resources */,
 				DFAD9B3F0C9C5AE149D07092 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +291,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MatzipApp/MatzipApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MatzipApp/Info.plist;
@@ -317,6 +320,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MatzipApp/MatzipApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = MatzipApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -407,10 +411,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -480,10 +481,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

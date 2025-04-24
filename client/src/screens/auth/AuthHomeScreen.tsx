@@ -1,21 +1,52 @@
 import CustomButton from '@/components/common/CustomButton';
 import {authNavigations, colors} from '@/constants';
+import useAuth from '@/hooks/queries/useAuth';
 import {AuthStackParamList} from '@/navigations/stack/AuthStackNavigator';
+import appleAuth, {
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import {StackScreenProps} from '@react-navigation/stack';
 import React from 'react';
 import {
   Dimensions,
   Image,
+  Platform,
   Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type AuthHomeScreenProps = StackScreenProps<AuthStackParamList, 'AuthHome'>;
 function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
+  const {appleLoginMutation} = useAuth();
+  const handlePressAppleLogin = async () => {
+    try {
+      const {identityToken, fullName} = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+      if (identityToken) {
+        appleLoginMutation.mutate({
+          identityToken,
+          appId: 'org.reactjs.native.example.MatzipApp',
+          nickname: fullName?.givenName ?? null,
+        });
+      }
+    } catch (error: any) {
+      if (error.code !== appleAuth.Error.CANCELED) {
+        Toast.show({
+          type: 'error',
+          text1: '애플 로그인이 실패했씁니다.',
+          text2: '나중에 다시 시도해주세요.',
+        });
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -26,6 +57,16 @@ function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
         />
       </View>
       <View style={styles.buttonContainer}>
+        {Platform.OS === 'ios' && (
+          <AppleButton
+            buttonStyle={AppleButton.Style.BLACK}
+            buttonType={AppleButton.Type.SIGN_IN}
+            style={styles.appleButton}
+            cornerRadius={3}
+            onPress={handlePressAppleLogin}
+            buttonText="애플 로그인하기"
+          />
+        )}
         <CustomButton
           label="카카오 로그인하기"
           variant="filled"
