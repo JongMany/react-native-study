@@ -1,5 +1,8 @@
 import {MutationFunction, useMutation, useQuery} from '@tanstack/react-query';
 import {
+  AppleIdentityRequestDto,
+  AppleIdentityResponseDto,
+  appleLogin,
   getAccesssToken,
   getProfile,
   kakaoLogin,
@@ -77,6 +80,15 @@ export const useKakaoLogin = (
   return useLogin(kakaoLogin, mutationOptions);
 };
 
+export const useAppleLogin = (
+  mutationOptions?: UseMutationCustomOptions<
+    AppleIdentityResponseDto,
+    AppleIdentityRequestDto
+  >,
+) => {
+  return useLogin(appleLogin, mutationOptions);
+};
+
 export const useRefreshAccessToken = () => {
   const {isSuccess, isError, data} = useQuery({
     queryKey: authQueryKey.getAccessToken(),
@@ -138,6 +150,7 @@ const useAuth = () => {
   const signupMutation = useSignup();
   const loginMutation = useEmailLogin();
   const kakaoLoginMutation = useKakaoLogin();
+  const appleLoginMutation = useAppleLogin();
   const logoutMutation = useLogout();
   const refreshAccessToken = useRefreshAccessToken();
   const getProfileQuery = useGetProfile({
@@ -150,6 +163,7 @@ const useAuth = () => {
     signupMutation,
     loginMutation,
     kakaoLoginMutation,
+    appleLoginMutation,
     getProfileQuery,
     logoutMutation,
   };
