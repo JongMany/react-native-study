@@ -1,6 +1,16 @@
-import {Dimensions, Platform, SafeAreaView, StyleSheet} from 'react-native';
-import React from 'react';
-import WebView, {WebViewMessageEvent} from 'react-native-webview';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
+import WebView, {
+  WebViewMessageEvent,
+  WebViewNavigation,
+} from 'react-native-webview';
 import Config from 'react-native-config';
 import axios from 'axios';
 import useAuth from '@/hooks/queries/useAuth';
@@ -13,6 +23,9 @@ const REDIRECT_URI = `${baseUri}/auth/oauth/kakao`;
 
 export default function KakaoLoginScreen() {
   const {kakaoLoginMutation} = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isChangeNavigate, setIsChangeNavigate] = useState(true);
+
   const handleOnMessage = (event: WebViewMessageEvent) => {
     if (event.nativeEvent.url.includes(`${REDIRECT_URI}?code=`)) {
       const code = event.nativeEvent.url.replace(`${REDIRECT_URI}?code=`, '');
@@ -38,14 +51,28 @@ export default function KakaoLoginScreen() {
       console.error('error', error);
     }
   };
+
+  // 로그인 후, 메시지 화면이 보이는 것을 막기 위한 함수
+  const handleNavigationState = (event: WebViewNavigation) => {
+    const isMatched = event.url.includes(`${REDIRECT_URI}?code=`);
+    setIsLoading(isMatched);
+    setIsChangeNavigate(event.loading);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      {(isLoading || isChangeNavigate) && (
+        <View style={styles.kakaoLoadingContainer}>
+          <ActivityIndicator size="small" color={colors.BLACK} />
+        </View>
+      )}
       <WebView
         source={{
           uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Config.KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
         }}
         onMessage={handleOnMessage}
         injectedJavaScript={"window.ReactNativeWebView.postMessage('')"}
+        onNavigationStateChange={handleNavigationState}
       />
     </SafeAreaView>
   );
