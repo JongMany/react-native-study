@@ -136,12 +136,11 @@ export const useLogout = (mutationOptions?: UseMutationCustomOptions) => {
     onSuccess: () => {
       removeAxiosHeader('Authorization');
       removeEncryptStorage(storageKey.AUTH.REFRESH_TOKEN);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
+      queryClient.resetQueries({
         queryKey: authQueryKey.all,
       });
     },
+
     ...mutationOptions,
   });
 };
