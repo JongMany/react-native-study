@@ -12,15 +12,15 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {colors} from '@/constants';
+import {colors, mainNavigations, settingNavigations} from '@/constants';
 import useAuth from '@/hooks/queries/useAuth';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function CustomDrawerContent(
   props: DrawerContentComponentProps,
 ) {
   const {getProfileQuery} = useAuth();
   const {email, nickname, imageUri, kakaoImageUri} = getProfileQuery.data || {};
-  const {logoutMutation} = useAuth();
 
   let imageSrc = require('@/assets/user-default.png');
   if (imageUri !== null) {
@@ -28,8 +28,12 @@ export default function CustomDrawerContent(
   } else if (kakaoImageUri !== null) {
     imageSrc = {uri: kakaoImageUri};
   }
-  const handleLogout = () => {
-    logoutMutation.mutate(null);
+
+  const handlePressSetting = () => {
+    console.log('setting');
+    props.navigation.navigate(mainNavigations.SETTING, {
+      screen: settingNavigations.SETTING_HOME,
+    });
   };
 
   return (
@@ -49,10 +53,12 @@ export default function CustomDrawerContent(
         {/* Navigator 자식요소 */}
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      {/* LogoutButton */}
-      <Pressable style={styles.logoutButton} onPress={handleLogout}>
-        <Text>로그아웃</Text>
-      </Pressable>
+      <View style={styles.bottomContainer}>
+        <Pressable style={styles.bottomMenu} onPress={handlePressSetting}>
+          <MaterialIcons name="settings" color={colors.GRAY_700} size={18} />
+          <Text style={styles.bottomMenuText}>설정</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -84,8 +90,22 @@ const styles = StyleSheet.create({
   nameText: {
     color: colors.BLACK,
   },
-  logoutButton: {
-    alignItems: 'flex-end',
-    padding: 14,
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: colors.GRAY_200,
+  },
+  bottomMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  bottomMenuText: {
+    fontWeight: '600',
+    fontSize: 15,
+    color: colors.GRAY_700,
   },
 });
